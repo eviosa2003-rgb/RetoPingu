@@ -17,6 +17,6 @@ public class Tablero {
 	}
 	
 	public void actualizarTablero() {
-		
+		//implementar actualizacion de tablero
 	}
 }
