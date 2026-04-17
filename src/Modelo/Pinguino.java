@@ -6,7 +6,7 @@ public class Pinguino extends Jugador {
 	
 	public Pinguino(String nombre, String color, int posicion, Inventario inv) {
 		super(nombre, color, posicion);
-		this.inv = inventario;
+		this.inv = inv;
 	}
 	 public Inventario getInv() {
 	        return inv;
