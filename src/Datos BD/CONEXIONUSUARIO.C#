@@ -1,0 +1,16 @@
+using Oracle.ManagedDataAccess.Client;
+
+string connectionString = "User Id=usuario;Password=clave;Data Source=localhost:1521/XEPDB1;";
+
+using (OracleConnection conn = new OracleConnection(connectionString))
+{
+    conn.Open();
+
+    OracleCommand cmd = new OracleCommand("SELECT * FROM empleados", conn);
+    OracleDataReader reader = cmd.ExecuteReader();
+
+    while (reader.Read())
+    {
+        Console.WriteLine(reader["nombre"].ToString());
+    }
+}
