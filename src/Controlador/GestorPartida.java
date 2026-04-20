@@ -15,16 +15,35 @@ public class GestorPartida {
 		this.gestorBBDD = new Gestor BBDD();
 		this.random = new Random();
 	}
+	public void nuevaPartida() {
+		this.partida = new Partida();
+		System.out.println("¡Nueva partida creada!");
+		
+	}
 
-    public int tirarDado(Jugador j, Dado dadoOpcional) {
-    	int resultado = dadoOpcional.tirar(random);
+    public int tirarDado(Jugador j, Dado dado) {
+    	int resultado = dado.tirar(random);
+    	System.out.println(jugador.getNombre() + "ha sacado un" + resultado);
+    	
     	gestorJugador.jugadorSeMueve(j, resultado, this.partida.getTablero());
     	
     	return resultado;
     }
+   
+    // Ejecuta el turno completo del jugador que toca jugar
 
     public void ejecutarTurnoCompleto() {
-        // TODO: ejecutar la lógica completa del turno
+    	if (this.partida == null) {
+    		System.out.println(" No hay ninguna partida activa. ");
+    		return;
+    	}
+    	Jugador jugadorActual = this.partida.getJugadorActual();
+    	
+    	
+    	
+    	
+    	
+    	
     }
 
     public void procesarTurnoJugador(Jugador j) {
