@@ -7,6 +7,7 @@ public class GestorPartida {
 	private GestorTablero gestorTablero;
 	private GestorBBDD gestorBBDD;
 	private Random random;
+	private Jugador jugador;
 	
 	public GestorPartida() {
 		this.partida = null;
@@ -39,23 +40,64 @@ public class GestorPartida {
     	}
     	Jugador jugadorActual = this.partida.getJugadorActual();
     	
+    	if (jugadorActual.tieneTurnoBloqueado()) {
+    		System.out.println(jugadorActual.getNombre() + "pierde el turno.");
+    		jugadorActual.desbloquearTurno();
+    		siguienteTurno();
+    		return;
+    	}
+    	procesarturnoJugador(jugadorActual);
     	
+    	actualizarEstadoTablero();
     	
+    	guardarPartida();
     	
+    	siguienteTurno();
     	
     	
     }
 
-    public void procesarTurnoJugador(Jugador j) {
-        // TODO: procesar turno de un jugador
+    
+    
+    
+    
+    public void procesarTurnoJugador(Jugador jugador) {
+		
+    	System.out.println("Turno de: " + jugador.getNombre());
+    	
+    	Dado dado = new Dado();
+    	
+    	if (jugador.getInventario().tieneDado()) {
+    		dado = jugador.getInventario().usarDado();
+    		System.out.println(jugador.getNombre() + "usa un dado especial. ");
+    		
+    	}
+    	int resultado = tirarDado (jugador, dado);
+    	
+    	int posicion = jugador.getPosicion();
+    	
+    	Casilla casilla = this.partida.getTablero().getCasilla(posicion);
+    	
+    	gestorTablero.ejecutarCasilla(this.partida, jugador.getPinguino(), casilla);
+   
     }
 
+    
     public void actualizarEstadoTablero() {
-        // TODO: actualizar estado del tablero
+    	
+    	gestorTablero.comprobarFinTurno(this.partida);
+    
     }
 
     public void siguienteTurno() {
-        // TODO: pasar al siguiente turno
+
+    this.partida.pasarAlSiguienteJugador();
+    Jugador siguiente = this.partida.getJugadorActual();
+    
+    System.out.println("Ahora le toca a: " + siguiente.getNombre());
+    
+    gestorBBDD.guardarTurnoActual(this.partida);
+    
     }
 
     public Partida getPartida() {
@@ -63,11 +105,27 @@ public class GestorPartida {
     }
 
     public void guardarPartida() {
-        // TODO: guardar la partida usando GestorBBDD
+    	
+    	if (this.partida !=null) {
+    		gestorBBDD.guardarPartida(this.partida);
+    		System.out.println("Partida guardda correctamente. ");
+    	}
+    	else {
+    		System.out.println("No hay partida para guardar. ");
+    	}
+    
     }
 
     public void cargarPartida(int id) {
-        // TODO: cargar partida desde BBDD
+        this.partida = gestorBBDD.cargarPartida(id);
+        
+        if(this.partida != null) {
+        	System.out.println("Partida cargada correctamente. ");
+        	
+        }
+        else {
+        	System.out.println("No se ha encontrado ninguna partida con ese ID.");
+        }
     }
 }
 
