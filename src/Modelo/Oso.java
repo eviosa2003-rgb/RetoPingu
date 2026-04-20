@@ -6,7 +6,7 @@ public class Oso extends Casilla{
 	}
 	
 	
-	public void realizarAccion() {
+	public void realizarAccion(Jugador jugador, Tablero tablero) {
 		
 	}
 }

@@ -10,7 +10,7 @@ public class Evento extends Casilla{
 		super(posicion);
 	}
 	
-	public void realizarAccion() {
+	public void realizarAccion(Jugador jugador, Tablero tablero) {
 		Random rand = new Random();
 		String evento = eventos[rand.nextInt(6)];
 		
