@@ -14,9 +14,14 @@ package Controlador;
 		    Parent root = loader.load();
 
 		    Scene scene = new Scene(root);
+		    
 		    primaryStage.setScene(scene);
 		    primaryStage.setTitle("El Juego del Pingüino");
 		    primaryStage.show();
+		}
+		catch (Exception e) {
+			System.out.println("Error al cargar la pantalla");
+			e.printStackTrace();
 		}
 
 	    public static void main(String[] args) {
