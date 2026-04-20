@@ -3,7 +3,35 @@ package Controlador;
 import java.util.Random;
 
 public class GestorJugador {
-	public void jugadorUsaItem(String nombreItem) {
+	
+	Random r = new Random();
+
+	
+	public void jugadorUsaItem(String nombreItem, Pinguino p) {
+		if (nombreItem.equals("bols")) {
+			
+			if (p.getBolasNieve()>0) {
+				p.setBolasNieve(p.getBolasNieve() -1);
+				System.out.println("Has usado una bola de nieve");
+			}
+			else if(nombreItem.equals("pez")) {
+				
+				if (p.getPeces()>0) {
+					p.setPeces(p.getPeces() -1);
+					System.out.println("Has usado una bola de nieve");
+					
+				}
+				else if (nombreItem.equals("dado")) {
+					
+					if (p.getDados()>0) {
+						int tirada = r.nextInt(6) +1;
+						p.setPosicion(p.getPosicion() + tirada);
+						p.setDados(p.getDados() -1);
+						System.out.println("Avanzas" + tirada);
+					}
+				}
+			}
+		}
 	
 	}
 	
