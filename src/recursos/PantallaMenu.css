@@ -1,0 +1,93 @@
+.root {
+    -fx-font-family: "Segoe UI", "Inter", "System";
+    -fx-background-color: linear-gradient(to bottom, #f8f9fc, #eef1f7);
+}
+
+/* MENU */
+.menu-bar {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* CARD */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 25, 0.2, 0, 6);
+    -fx-padding: 25;
+}
+
+/* TITLES */
+.title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 900;
+    -fx-text-fill: #1a1f36;
+    -fx-letter-spacing: 1px;
+}
+
+.subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6b7280;
+}
+
+/* FIELDS */
+.field-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4b5563;
+    -fx-font-weight: bold;
+}
+
+.field {
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #d1d5db;
+    -fx-background-color: #f9fafb;
+    -fx-padding: 10 14;
+
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+/* EFECTO FOCUS */
+.field:focused {
+    -fx-border-color: #3b82f6;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.2), 8, 0.2, 0, 0);
+}
+
+/* BUTTONS */
+.button {
+    -fx-background-radius: 12;
+    -fx-padding: 10 16;
+    -fx-background-color: #e5e7eb;
+    -fx-text-fill: #1f2937;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #d1d5db;
+}
+
+/* BOTÓN PRINCIPAL */
+.button.primary {
+    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
+    -fx-text-fill: white;
+}
+
+.button.primary:hover {
+    -fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8);
+}
+
+/* EFECTO CLICK */
+.button:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+/* Hint */
+.hint {
+    -fx-font-size: 12px;
+    -fx-text-fill: #9ca3af;
+}
