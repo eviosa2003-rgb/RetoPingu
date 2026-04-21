@@ -2,6 +2,7 @@ package Modelo;
 
 import java.util.ArrayList;
 public class Tablero {
+	
 	private ArrayList<Casilla> casillas;
 	
 	public Tablero() {
@@ -18,5 +19,6 @@ public class Tablero {
 	
 	public void actualizarTablero() {
 		//implementar actualizacion de tablero
+		
 	}
 }

@@ -4,8 +4,12 @@ public class Trineo extends Casilla {
 	public Trineo(int posicion) {
 		super(posicion);
 	}
-	
-	public void realizarAccion() {
+
+	@Override
+	public void realizarAccion(Jugador jugador, Tablero tablero) {
+		
 		
 	}
+	
+	
 }

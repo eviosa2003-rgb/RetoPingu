@@ -5,8 +5,11 @@ public class Normal extends Casilla {
 		super(posicion);
 	}
 	
-	public void realizarAccion() {
-		 
+	
+	@Override
+	public void realizarAccion(Jugador jugador, Tablero tablero) {
+		
+		
 	}
 
 }

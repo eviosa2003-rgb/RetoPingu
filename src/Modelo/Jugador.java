@@ -39,5 +39,13 @@ public abstract class Jugador {
 	public void moverPosicion (int p) {
 		//implementar movimiento
 		this.posicion += p;
+		
+		if(this.posicion < 0) {
+			this.posicion = 0;
+		}
+		
+		if(this.posicion > 49) {
+			this.posicion = 49;
+		}
 	}
 }
