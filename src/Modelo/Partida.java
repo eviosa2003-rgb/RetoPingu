@@ -11,6 +11,7 @@ public class Partida {
 	private int jugadorActual;
 	private boolean finalizada;
 	private Jugador ganador;
+	private String lastEvent;
 	
 	public Partida() {
 		this.jugadores = new ArrayList<Jugador>();
@@ -19,46 +20,7 @@ public class Partida {
 		this.finalizada = false;
 		this.ganador = null;
 		
-		ArrayList<Casilla> casillas = new ArrayList<Casilla>();
-		
-		casillas.add(new Normal(0));
-		
-		Random rand = new Random();
-		
-		for(int i = 1; i < 49; i++) {
-			int tipo = rand.nextInt(6);
-			
-			Casilla c;
-			switch(tipo) {
-				case 0:
-					c = new Normal(i);
-					break;
-				case 1:
-					c = new Oso(i);
-					break;
-				case 2:
-					c = new Trineo(i);
-					break;
-				case 3:
-					c = new Agujero(i);
-					break;
-				case 4:
-					c = new Evento (i);
-					break;
-				case 5:
-					c = new SueloQuebradizo(i);
-					break;
-				default:
-					c = new Normal(i);
-			}
-			casillas.add(c);
-			System.out.println();
-		}
-		casillas.add(new Normal(49));
-		
-		this.tablero = new Tablero();
-		this.tablero.setCasillas(casillas);
-	}
+	}	
 	public Tablero getTablero() {
 		return tablero;
 	}
@@ -107,10 +69,39 @@ public class Partida {
 		this.ganador = ganador;
 	}
 	
+	public String getLastEvent() {
+		return lastEvent;
+	}
+	
+	public void setLastEvent(String lastEvent) {
+		this.lastEvent = lastEvent;
+	}
+	
 	public Jugador getJugadorActual() {
 	    if (jugadores == null || jugadores.isEmpty()) {
 	        return null;
 	    }
+	    if (jugadorActual < 0 || jugadorActual >= jugadores.size()) {
+	    	jugadorActual = 0;
+	    }
 	    return jugadores.get(jugadorActual);
+	}
+	
+	public void siguienteTurno() {
+		if (!jugadores.isEmpty()) {
+			jugadorActual = (jugadorActual + 1) % jugadores.size();
+			turnos++;
+		}
+	}
+	
+	public void comprobarGanador() {
+		for(Jugador jugador : jugadores) {
+			if (jugador.getPosicion() >= 49) {
+				finalizada = true;
+				ganador = jugador;
+				setLastEvent(jugador.getNombre() + " GANADOR!!!");
+				break;
+			}
+		}
 	}
 }
