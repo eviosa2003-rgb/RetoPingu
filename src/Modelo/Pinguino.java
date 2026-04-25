@@ -17,18 +17,39 @@ public class Pinguino extends Jugador {
 	    }
 
 	    public void gestionarBatalla(Pinguino p) {
-	        // TODO: implementar lógica de batalla
+	        int bolasPropias = inv.getCantidad("bola");
+	        int bolasRival = p.getInv().getCantidad("bola");
+	        
+	        inv.gastarItem("bola", bolasPropias);
+	        p.getInv().gastarItem("bola", bolasPropias);
+	    	
+	        if (bolasPropias > bolasRival) {
+	        	p.moverPosicion(-(bolasPropias - bolasRival));
+	        } else if (bolasRival > bolasPropias) {
+	        	this.moverPosicion(-(bolasRival - bolasPropias));
+	        }
 	    }
 
 	    public void usarItem(Item i) {
-	        // TODO: implementar uso de item
+	    	return inv.gastarItem(i.getNombre(), 1);
 	    }
 
 	    public void añadirItem(Item i) {
-	        // TODO: implementar añadir item al inventario
+	        String nombre = i.getNombre().toLowerCase();
+	        int max = 1000;
+	        
+	        if (nombre.equals("rapida") || nombre.equals("lento") || nombre.equals("normal") ) {
+	        	max = 3;
+	        } else if (nombre.equals("pez")) {
+	        	max = 2;
+	        } else if (nombre.equals("bolas")) {
+	        	max = 6;
+	        }
 	    }
 
 	    public void quitarItem(Item i) {
-	        // TODO: implementar quitar item del inventario
+	       
+	    	inv.gastarItem( i.getNombre(), i.getCantidad());
+	    	inv.eliminarVacios();
 	    }
 }
