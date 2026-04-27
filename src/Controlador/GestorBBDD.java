@@ -42,19 +42,19 @@ public class GestorBBDD {
 	public void guardarBBDD(Partida p) {
 		String sql = "INSERT INTO partidas (estado) VALUES (?)";
 		
-		try (Connection conn = DriverManager.getConnection(ur1BBDD), username,
-				PreparedStatment stmt = conn.prepareStatement(sql )){
+		try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password)
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
 			
 			Gson gson = new Gson();
 			String json = gson.toJson(p);
 			
-			stmt.setString(1,jason);
+			stmt.setString(1,json);
 			stmt.executeUpdate();
 			
 			System.out.println("Partida guardada correctamente");
 		}
-		catch (SQL Exception e) {
-			e.printStrackTrace();
+		catch (SQLException e) {
+			e.printStackTrace();
 			
 		}
 	}
@@ -66,8 +66,8 @@ public class GestorBBDD {
 		String sql = "SELECT estado FROM partidas WHERE id = ?";
 		Partida partida = null;
 		
-		try (Connection conn = DriverManager.getConnection(sql)){
-			stmt.setInt(1, id);
+		try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password);
+			PreparedStatement stmt = conn-prepareStatement(sql)){
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				String json = rs.getString("estado");
