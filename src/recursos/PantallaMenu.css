@@ -1,151 +1,47 @@
-/* ================================ */
-/*   PANTALLA MENÚ — TEMA PINGÜINO  */
-/* ================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
-
-/* ROOT */
 .root {
-    -fx-font-family: "Nunito";
-    -fx-background-color: #b3e0f2;
+    -fx-font-family: "Arial";
 }
 
-/* MENÚ */
-.menu-bar {
-    -fx-background-color: #1a3a5c;
-    -fx-border-color: #0d2840;
-    -fx-border-width: 0 0 3 0;
-}
-
-.menu-bar .label {
-    -fx-text-fill: #e0f4ff;
-    -fx-font-weight: bold;
-}
-
-.menu {
-    -fx-background-color: #1a3a5c;
-}
-
-.menu:hover, .menu:showing {
-    -fx-background-color: #0d2840;
-}
-
-.context-menu {
-    -fx-background-color: #1a3a5c;
-    -fx-border-color: #0d2840;
-    -fx-border-width: 2;
+/* TOP BAR */
+.top-bar {
+    -fx-background-color: rgba(0,0,0,0.4);
+    -fx-padding: 10;
     -fx-background-radius: 10;
-    -fx-border-radius: 10;
 }
 
-.menu-item {
-    -fx-background-color: transparent;
-}
-
-.menu-item .label {
-    -fx-text-fill: #e0f4ff;
-    -fx-font-size: 13px;
-}
-
-.menu-item:focused {
-    -fx-background-color: #2f6fed;
-    -fx-background-radius: 6;
-}
-
-/* TARJETA CENTRAL */
-.card {
-    -fx-background-color: #f0faff;
-    -fx-background-radius: 22;
-    -fx-border-color: #7ecef0;
-    -fx-border-width: 2.5;
-    -fx-border-radius: 22;
-    -fx-effect: dropshadow(gaussian, rgba(30,90,140,0.28), 20, 0.2, 0, 5);
-}
-
-/* TÍTULO */
-.title {
-    -fx-font-family: "Fredoka One";
-    -fx-font-size: 30px;
-    -fx-text-fill: #1a3a5c;
-    -fx-alignment: CENTER;
-    -fx-text-alignment: CENTER;
-}
-
-/* ETIQUETAS DE CAMPO */
-.field-label {
-    -fx-font-size: 13px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #1a3a5c;
-    -fx-opacity: 0.85;
-}
-
-/* CAMPOS DE TEXTO */
-.field {
-    -fx-background-color: #e0f5ff;
-    -fx-background-radius: 12;
-    -fx-border-color: #7ecef0;
-    -fx-border-width: 2;
-    -fx-border-radius: 12;
-    -fx-text-fill: #1a3a5c;
-    -fx-prompt-text-fill: #7ecef0;
-    -fx-font-size: 14px;
-    -fx-padding: 8 12;
-}
-
-.field:focused {
-    -fx-background-color: #cceeff;
-    -fx-border-color: #2f6fed;
-    -fx-effect: dropshadow(gaussian, rgba(47,111,237,0.25), 8, 0.2, 0, 0);
-}
-
-/* BOTONES */
-.button {
-    -fx-background-radius: 12;
-    -fx-padding: 9 18;
-    -fx-background-color: #d0ecfa;
-    -fx-text-fill: #1a3a5c;
-    -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-border-color: #7ecef0;
-    -fx-border-width: 2;
-    -fx-border-radius: 12;
-    -fx-cursor: hand;
-}
-
-.button:hover {
-    -fx-background-color: #b3dff5;
-    -fx-border-color: #4db8e8;
-}
-
-.button:pressed {
-    -fx-background-color: #7ecef0;
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
-}
-
-.button.primary {
-    -fx-background-color: #1a3a5c;
-    -fx-text-fill: #b3e8ff;
-    -fx-border-color: #0d2840;
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-}
-
-.button.primary:hover {
-    -fx-background-color: #0d2840;
+.label {
     -fx-text-fill: white;
+    -fx-font-size: 16px;
 }
 
-.button.primary:pressed {
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
+/* BOTÓ JUGAR */
+.btn-play {
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-background-radius: 10;
+    -fx-padding: 10 30;
 }
 
-/* HINT */
-.hint {
-    -fx-font-size: 11px;
-    -fx-text-fill: #4a8aaa;
-    -fx-opacity: 0.85;
-    -fx-text-alignment: CENTER;
-    -fx-alignment: CENTER;
+.btn-play:hover {
+    -fx-background-color: #27ae60;
+}
+
+/* BOTONS SECUNDARIS */
+.btn-secondary {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-padding: 10 20;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* PANELS */
+.panel {
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-padding: 15;
+    -fx-background-radius: 15;
 }
