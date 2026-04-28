@@ -7,19 +7,14 @@ public class Partida {
 	
 	private Tablero tablero;
 	private ArrayList<Jugador> jugadores;
-	private int turnos;
-	private int jugadorActual;
+	private int turnoActual;
 	private boolean finalizada;
-	private Jugador ganador;
-	private String lastEvent;
+	
 	
 	public Partida() {
 		this.jugadores = new ArrayList<Jugador>();
-		this.turnos = 0;
-		this.jugadorActual = 0;
+		this.turnoActual = 0;
 		this.finalizada = false;
-		this.ganador = null;
-		
 	}	
 	public Tablero getTablero() {
 		return tablero;
@@ -37,20 +32,13 @@ public class Partida {
 		this.jugadores = jugadores;
 	}
 	
-	public int getTurnos() {
-		return turnos;
-	}
-	
-	public void setTurnos(int turnos) {
-		this.turnos = turnos;
-	}
 	
 	public int getJugadorActualIndice() {
-		return jugadorActual;
+		return turnoActual;
 	}
 	
 	public void setJugadorActualIndice(int jugadorActual) {
-		this.jugadorActual = jugadorActual;
+		this.turnoActual = jugadorActual;
 	}
 	
 	public boolean isFinalizada() {
@@ -61,47 +49,59 @@ public class Partida {
 		this.finalizada = finalizada;
 	}
 	
-	public Jugador getGanador() {
-		return ganador;
-	}
-	
-	public void setGanador(Jugador ganador) {
-		this.ganador = ganador;
-	}
-	
-	public String getLastEvent() {
-		return lastEvent;
-	}
-	
-	public void setLastEvent(String lastEvent) {
-		this.lastEvent = lastEvent;
+	public void añadirJugador(Jugador j) {
+		if(jugadores.size() < 4) {
+			jugadores.add(j);
+		}
 	}
 	
 	public Jugador getJugadorActual() {
 	    if (jugadores == null || jugadores.isEmpty()) {
 	        return null;
 	    }
-	    if (jugadorActual < 0 || jugadorActual >= jugadores.size()) {
-	    	jugadorActual = 0;
+	    if (turnoActual < 0 || turnoActual >= jugadores.size()) {
+	    	turnoActual = 0;
 	    }
-	    return jugadores.get(jugadorActual);
+	    return jugadores.get(turnoActual);
+	}
+	
+	public void ejecutarTurno() {
+		Jugador j = jugadores.get(turnoActual);
+		
+		if (j instanceof Foca) {
+			((Foca) j).actuar(this);
+		}else {
+			Pinguino p = (Pinguino) j;
+			int tirada = new Random().nextInt(6) + 1;
+			p.moverPosicion(tirada);
+			
+			Casilla c = tablero.getCasillas(p.getPosicion());
+			c.realizarAccion(p, this);
+			
+			comprobarBatallas(p);
+		}
+		comprobarVictoria(j);
+		siguienteTurno();
+	}
+	
+	public void comprobarBatallas(Pinguino p) {
+		for (Jugador j : jugadores) {
+			if (j instanceof Pinguino && j != p) {
+				if (j.getPosicion() == p.getPosicion()) {
+					p.gestionarBatalla((Pinguino) j);
+				}
+			}
+		}
+	}
+	
+	public void comprobarVictoria(Jugador j) {
+		if (j.getPosicion() >= 49) {
+			finalizada = true;
+			System.out.println("Ganador" + j.getNombre());
+		}
 	}
 	
 	public void siguienteTurno() {
-		if (!jugadores.isEmpty()) {
-			jugadorActual = (jugadorActual + 1) % jugadores.size();
-			turnos++;
-		}
-	}
-	
-	public void comprobarGanador() {
-		for(Jugador jugador : jugadores) {
-			if (jugador.getPosicion() >= 49) {
-				finalizada = true;
-				ganador = jugador;
-				setLastEvent(jugador.getNombre() + " GANADOR!!!");
-				break;
-			}
-		}
+		turnoActual = (turnoActual + 1) % jugadores.size();
 	}
 }

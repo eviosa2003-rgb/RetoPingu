@@ -6,12 +6,25 @@ public class Dado extends Item{
 	
 	private int max;
 	private int min;
+	private Random r;
 	
-	public Dado(String nombre, int cantidad, int min, int max) {
-		super(nombre,cantidad);
-		this.min = min;
-		this.max = max;
+	public Dado(String tipo) {
+		super(tipo, 1);
+		r = new Random();
+		
+		if (tipo.equalsIgnoreCase("rapida")) {
+			min = 5;
+			max = 10;
+		} else if(tipo.equalsIgnoreCase("lento")) {
+			min = 1;
+			max = 3;
+		}else {
+			min = 1;
+			max = 6;
+		}
 	}
+	
+
 	
 	public int getMax() {
 		return max;
@@ -28,6 +41,6 @@ public class Dado extends Item{
 	}
 	
 	public int tirar(Random r) {
-		return r.nextInt((max-min) + 1) + min;
+		return r.nextInt(max-min + 1) + min;
 	}
 }

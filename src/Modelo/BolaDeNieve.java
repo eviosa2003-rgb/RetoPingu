@@ -1,7 +1,7 @@
 package Modelo;
 
 public class BolaDeNieve extends Item {
-	public BolaDeNieve(String nombre, int cantidad) {
-		super(nombre, cantidad);
+	public BolaDeNieve(int cantidad) {
+		super("bola", cantidad);
 	}
 }

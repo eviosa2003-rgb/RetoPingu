@@ -5,8 +5,11 @@ public class Oso extends Casilla{
 		super(posicion);
 	}
 	
-	
-	public void realizarAccion(Jugador jugador, Tablero tablero) {
-		
+	public void realizarAccion(Partida p, Partida partida) {
+		p.setPosicion(0);
 	}
-}
+	
+	
+	
+	
+	

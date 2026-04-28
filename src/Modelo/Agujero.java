@@ -6,8 +6,7 @@ public class Agujero extends Casilla {
 	}
 	
 	@Override
-	public void realizarAccion(Jugador jugador, Tablero tablero) {
-		// TODO Auto-generated method stub
-		
+	public void realizarAccion(Pinguino p, Partida partida) {
+		p.setPosicion(p.getPosicion() - 3);
 	}
 }
