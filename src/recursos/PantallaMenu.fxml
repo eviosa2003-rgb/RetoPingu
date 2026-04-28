@@ -5,7 +5,7 @@
     <!-- FONS -->
     <ImageView fitWidth="800" fitHeight="600" preserveRatio="false">
         <image>
-            <Image url="@/recursos/fons.png"/>
+            <Image url="@fons.png"/>
         </image>
     </ImageView>
 
