@@ -1,6 +1,13 @@
 package Controlador;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import Modelo.Dado;
+import Modelo.Foca;
+import Modelo.Inventario;
+import Modelo.Jugador;
+import Modelo.Partida;
 
 public class GestorPartida {
 	private Partida partida;
@@ -16,9 +23,24 @@ public class GestorPartida {
 		this.gestorBBDD = new Gestor BBDD();
 		this.random = new Random();
 	}
-	public void nuevaPartida() {
+	public void nuevaPartida(int numHumanos) {
 		this.partida = new Partida();
+		ArrayList<Jugador> Jugaodres = new ArrayList<Jugador>();
 		System.out.println("¡Nueva partida creada!");
+		
+		String[] colores = {"Azul", "Rojo", "Verde", "Amarillo"};
+		
+		for (int i= 0; i < numHumanos && i < 4; i ++) {
+			Inventario inv = new Inventario();
+			
+			inv.actualizar(new Dado("normal", 1, 1, 6),3);
+			jugadores.add(new Pinguino("Jugador " + (i + 1, colores[i], inv)));
+		}
+		
+		Foca cpu = new Foca ("IA Foca", "Gris", 0);
+		jugadores.add(cpu);
+		
+		
 		
 	}
 

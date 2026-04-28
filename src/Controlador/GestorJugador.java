@@ -2,13 +2,17 @@ package Controlador;
 
 import java.util.Random;
 
+import Modelo.Foca;
+import Modelo.Jugador;
+import Modelo.Pinguino;
+
 public class GestorJugador {
 	
 	Random r = new Random();
 
 	
 	public void jugadorUsaItem(String nombreItem, Pinguino p) {
-		if (nombreItem.equals("bols")) {
+		if (nombreItem.equals("bola")) {
 			
 			if (p.getBolasNieve()>0) {
 				p.setBolasNieve(p.getBolasNieve() -1);
@@ -18,7 +22,7 @@ public class GestorJugador {
 				
 				if (p.getPeces()>0) {
 					p.setPeces(p.getPeces() -1);
-					System.out.println("Has usado una bola de nieve");
+					System.out.println("Has usado un pez");
 					
 				}
 				else if (nombreItem.equals("dado")) {
@@ -28,6 +32,7 @@ public class GestorJugador {
 						p.setPosicion(p.getPosicion() + tirada);
 						p.setDados(p.getDados() -1);
 						System.out.println("Avanzas" + tirada);
+						
 					}
 				}
 			}
@@ -74,7 +79,7 @@ public class GestorJugador {
 		
 		if ( num == 1) {
 			p.setBolasNieve(p.getBolasNieve()+2);
-			System.out.println("Ganas bolas de nieve");
+			System.out.println("Ganas 2 bolas de nieve");
 		}
 		if (num == 2) {
 			p.setPosicion(p.getPosicion()+3);
@@ -95,7 +100,7 @@ public class GestorJugador {
 		
 		if (n1> n2) {
 			p2.setPosicion(p2.getPosicion() -2);
-			System.out.println("Ganan p1");
+			System.out.println("Gana p1");
 			
 		} 
 		else {
@@ -105,7 +110,7 @@ public class GestorJugador {
 	}
 	
 	
-	public void focaInteractua(Pinguino p, Foca F) {
+	public void focaInteractua(Pinguino p, Foca f) {
 		if (p.isProtegido()) {
 			System.out.println("No pasa nada (protegido)");
 			p.setProtegido(false);
