@@ -17,6 +17,14 @@ public class Inventario {
 		this.lista = lista;
 	}
 	
+	public Item buscarPorNombre(String nombre) {
+		for(Item item : lista) {
+			if(item.getNombre().equalsIgnoreCase(nombre)){
+				return item;
+			}
+		}
+		return null;
+	}
 	public int getCantidad(String nombre) {
 		for (Item i : lista) {
 			if( i.getNombre().equalsIgnoreCase(nombre)) {
@@ -25,15 +33,22 @@ public class Inventario {
 		}
 		return 0;
 	}
-	
-	public void añadirItem(Item item) {
-		for (Item i : lista) {
-			if (i.getNombre().equalsIgnoreCase(item.getNombre())) {
-				i.sumarCantidad(item.getCantidad());
-				return;
+	public void añadirItem(Item nuevo, int maximo) {
+		Item stock = buscarPorNombre(nuevo.getNombre());
+		if(stock == null) {
+			int cantidad = nuevo.getCantidad();
+			if(cantidad > maximo) {
+				cantidad = maximo;
 			}
+			nuevo.setCantidad(cantidad);
+			lista.add(nuevo);
+		}else {
+			int total = stock.getCantidad() + nuevo.getCantidad();
+			if(total > maximo) {
+				total = maximo;
+			}
+			stock.setCantidad(total);
 		}
-		lista.add(item);
 	}
 	
 	public boolean gastarItem(String nombre, int cantidad) {
@@ -47,6 +62,14 @@ public class Inventario {
 			}
 		}
 		return false;
+	}
+	
+	public int totalObjetos() {
+		int total = 0;
+		for(Item item : lista) {
+			total += item.getCantidad();
+		}
+		return total;
 	}
 	
 	public void eliminarVacios() {

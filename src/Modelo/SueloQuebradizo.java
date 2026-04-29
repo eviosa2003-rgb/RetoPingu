@@ -1,6 +1,5 @@
 package Modelo;
 
-import java.util.ArrayList;
 
 public class SueloQuebradizo extends Casilla {
 	public SueloQuebradizo(int posicion) {
@@ -8,7 +7,18 @@ public class SueloQuebradizo extends Casilla {
 	}
 
 	@Override
-	public void realizarAccion() {
-		System.out.println("¡El suelo se rompe!");
+	public void realizarAccion(Jugador jugador) {
+		if(jugador instanceof Pinguino) {
+			String resultado = aplicarEfecto((Pinguino) jugador);
+			System.out.println(resultado);
+		}
+	}
+	
+	public String aplicarEfecto(Pinguino p) {
+		int cantidad = p.getInv().totalObjetos();
+		
+		if(cantidad > 5) {
+			p.setPosicion(0);
+		}
 	}
 }
