@@ -65,11 +65,14 @@
                      fitWidth="680" fitHeight="430"
                      preserveRatio="false"/>
             ───────────────────────────── -->
-            <ImageView
+           <ImageView
     fx:id="fondoImg"
-    image="@fons_arctic.png"
     fitWidth="740" fitHeight="460"
-    preserveRatio="false"/>
+    preserveRatio="false">
+    <image>
+        <Image url="@fons_arctic.png"/>
+    </image>
+</ImageView>
 
             <!-- ─────────────────────────────
                  CAPA 1: UI principal
