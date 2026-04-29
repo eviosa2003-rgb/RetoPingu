@@ -2,8 +2,8 @@ package Modelo;
 
 public class Pez extends Item{
 	
-	public Pez(int cantidad) {
-		super("pez", cantidad);
+	public Pez(String nombre, int cantidad) {
+		super(nombre, cantidad);
 	}
 
 }

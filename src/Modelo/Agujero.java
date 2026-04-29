@@ -6,7 +6,7 @@ public class Agujero extends Casilla {
 	}
 	
 	@Override
-	public void realizarAccion(Pinguino p, Partida partida) {
-		p.setPosicion(p.getPosicion() - 3);
+	public void realizarAccion( Jugador jugador) {
+		
 	}
 }

@@ -5,15 +5,17 @@ public class Trineo extends Casilla {
 		super(posicion);
 	}
 
-	@Override
-	public void realizarAccion(Pinguino p, Partida partida) {
-		for (int i = p.getPosicion() + 1; i < 50; i++) {
-			if (partida.getTablero().getCasillas().get(i) instanceof Trineo ) {
-				p.setPosicion(i);
-				break;
+	public void realizarAccion(Partida partida, Jugador jugador) {
+		
+		for(int i = posicion + 1; i < partida.getTablero().getCasillas().size(); i++) {
+			Casilla c = partida.getTablero().getCasillas().get(i);
+			
+			if(c instanceof Trineo) {
+				jugador.setPosicion(i);
+				partida.setLastEvent("Avanzas al siguiente trineo.");
+				return;
 			}
 		}
+		partida.setLastEvent("No hay mas trineos");
 	}
-	
-	
 }

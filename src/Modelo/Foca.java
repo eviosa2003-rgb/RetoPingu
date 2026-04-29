@@ -3,10 +3,12 @@ package Modelo;
 public class Foca extends Jugador{
 	
 	private boolean soborno;
+	private int turnoBloqueado;
 	
 	public Foca(String nombre, String color, int posicion) {
 		super(nombre, color, posicion);
 		this.soborno = false;
+		this.turnoBloqueado = 0;
 	}
 	
 	public boolean isSoborno() {
@@ -17,30 +19,33 @@ public class Foca extends Jugador{
 		this.soborno = soborno;
 	}
 	
+	public void setTurnoBloqueado(int turnoBloqueado) {
+		this.turnoBloqueado = turnoBloqueado;
+	}
+	
+	public int getTurnoBloqueado() {
+		return turnoBloqueado;
+	}
+	
 	public void aplastarJugador(Pinguino p) {
 		//implementar aplastar jugador
+		int mitad = p.getInv().totalObjetos() / 2;
 		
-		for(Item i : p.getInv().getLista()) {
-			int mitad = i.getCantidad() / 2;
-			i.restarCantidad(mitad);
-		}
-		p.getInv().eliminarVacios();
-	}
-	
-	public void golpearJugador(Pinguino p, Partida partida) {
-		
-		for(int i = p.getPosicion() - 1; i >= 0; i--) {
-			Casilla c = partida.getTablero().getCasillas().get(i);
-			
-			if(c instanceof SueloQuebradizo) {
-				p.setPosicion(i);
-				return;
+		while(mitad > 0) {
+			if(p.getInv().gastarItem("bola", 1)) {
+				mitad--;
+			}else if (p.getInv().gastarItem("pez", 1)) {
+				mitad--;
+			}else if (p.getInv().gastarItem("rapido", 1)) {
+				mitad--;
+			}else if (p.getInv().gastarItem("lento", 1)) {
+				mitad--;
+			}else if (p.getInv().gastarItem("normal", 1)) {
+				mitad--;
+			}else {
+				mitad = 0;
 			}
 		}
-		p.setPosicion(0);
-	}
-	
-	public boolean esSobornado() {
-		return soborno;
+		p.getInv().eliminarVacios();
 	}
 }
