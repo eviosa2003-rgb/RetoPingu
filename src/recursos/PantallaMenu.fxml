@@ -18,33 +18,6 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 
-<!--
-    PantallaMenu.fxml — Pingui Dinàmic
-    ====================================
-    Estructura:
-      · BorderPane arrel
-          top    → MenuBar
-          center → StackPane
-                     [0] Pane (fons àrtic, tot SVG en Java)  ← fx:id="fondoPane"
-                     [1] HBox (jugador info, botons, cartellet)
-
-    El fons s'ha de pintar des del controlador sobre fondoPane
-    (o substituir per un ImageView si tens el PNG exportat).
-
-    Elements ficats a Scene Builder (capa UI):
-      · Targeta jugador (dalt-esquerra)   fx:id="jugadorCard"
-      · Label nom jugador                 fx:id="jugadorNom"
-      · Label puntuació                   fx:id="jugadorPunts"
-      · Botó JUGAR                        fx:id="btnJugar"
-      · Botó PERSONATGES                  fx:id="btnPersonatges"
-      · Botó RÀNQUING                     fx:id="btnRanquing"
-      · Botó BOTIGA                       fx:id="btnBotiga"
-      · Botons icones dalt-dreta:         fx:id="btnTrofeu", btnOpcions, btnAjuda
-      · Label versió                      fx:id="labelVersio"
-
-    Elements NO ficats aquí (es generen al controlador):
-      · Canvas/Pane del fons àrtic        fx:id="fondoPane"
--->
 
 <BorderPane
     xmlns="http://javafx.com/javafx/21.0.10"
@@ -92,8 +65,11 @@
                      fitWidth="680" fitHeight="430"
                      preserveRatio="false"/>
             ───────────────────────────── -->
-            <Pane fx:id="fondoPane" styleClass="fondo-pane"
-                  prefWidth="680" prefHeight="430"/>
+            <ImageView
+    fx:id="fondoImg"
+    image="@fons_arctic.png"
+    fitWidth="740" fitHeight="460"
+    preserveRatio="false"/>
 
             <!-- ─────────────────────────────
                  CAPA 1: UI principal
