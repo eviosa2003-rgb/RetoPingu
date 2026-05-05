@@ -5,8 +5,7 @@ public class Normal extends Casilla {
 		super(posicion);
 	}
 	
-	public void realizarAccion() {
-		 
+	public void realizarAccion( Jugador jugador) {
+		
 	}
-
 }

@@ -3,12 +3,11 @@ package Modelo;
 import java.util.Random;
 
 public class Dado extends Item{
-	
 	private int max;
 	private int min;
 	
 	public Dado(String nombre, int cantidad, int min, int max) {
-		super(nombre,cantidad);
+		super(nombre, cantidad);
 		this.min = min;
 		this.max = max;
 	}
@@ -28,6 +27,6 @@ public class Dado extends Item{
 	}
 	
 	public int tirar(Random r) {
-		return r.nextInt((max-min) + 1) + min;
+		return r.nextInt(max-min + 1) + min;
 	}
 }

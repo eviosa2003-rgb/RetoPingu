@@ -1,64 +1,31 @@
 package Modelo;
 
+import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 public class Partida {
 	
 	private Tablero tablero;
 	private ArrayList<Jugador> jugadores;
+	private int turnoActual;
 	private int turnos;
-	private int jugadorActual;
 	private boolean finalizada;
 	private Jugador ganador;
+	private String lastEvent;
+	
 	
 	public Partida() {
+		this.tablero = new Tablero();
 		this.jugadores = new ArrayList<Jugador>();
+		this.turnoActual = 0;
 		this.turnos = 0;
-		this.jugadorActual = 0;
 		this.finalizada = false;
 		this.ganador = null;
-		
-		ArrayList<Casilla> casillas = new ArrayList<Casilla>();
-		
-		casillas.add(new Normal(0));
-		
-		Random rand = new Random();
-		
-		for(int i = 1; i < 49; i++) {
-			int tipo = rand.nextInt(6);
-			
-			Casilla c;
-			switch(tipo) {
-				case 0:
-					c = new Normal(i);
-					break;
-				case 1:
-					c = new Oso(i);
-					break;
-				case 2:
-					c = new Trineo(i);
-					break;
-				case 3:
-					c = new Agujero(i);
-					break;
-				case 4:
-					c = new Evento (i);
-					break;
-				case 5:
-					c = new SueloQuebradizo(i);
-					break;
-				default:
-					c = new Normal(i);
-			}
-			casillas.add(c);
-			System.out.println();
-		}
-		casillas.add(new Normal(49));
-		
-		this.tablero = new Tablero();
-		this.tablero.setCasillas(casillas);
-	}
+		this.lastEvent = "Que comience la partida";
+		this.tablero.generarCasillasAleatorias();
+	}	
 	public Tablero getTablero() {
 		return tablero;
 	}
@@ -84,11 +51,11 @@ public class Partida {
 	}
 	
 	public int getJugadorActualIndice() {
-		return jugadorActual;
+		return turnoActual;
 	}
 	
 	public void setJugadorActualIndice(int jugadorActual) {
-		this.jugadorActual = jugadorActual;
+		this.turnoActual = jugadorActual;
 	}
 	
 	public boolean isFinalizada() {
@@ -107,10 +74,41 @@ public class Partida {
 		this.ganador = ganador;
 	}
 	
-	public Jugador getJugadorActual() {
-	    if (jugadores == null || jugadores.isEmpty()) {
-	        return null;
-	    }
-	    return jugadores.get(jugadorActual);
+	public String getLastEvent() {
+		return lastEvent;
+	}
+	
+	public void setLastEvent(String lastEvent) {
+		this.lastEvent = lastEvent;
+	}
+	
+	public Jugador getTurnoActual() {
+		if(jugadores == null || jugadores.isEmpty()) {
+			return null;
+		}
+		
+		if(turnoActual < 0 || turnoActual >= jugadores.size()) {
+			turnoActual =0;
+		}
+		
+		return jugadores.get(turnoActual);
+	}
+	
+	public void siguienteTurno() {
+		if(!jugadores.isEmpty()) {
+			turnoActual = (turnoActual + 1) % jugadores.size();
+			turnos++;
+		}
+	}
+	
+	public void comprobarGanador() {
+		for(Jugador jugador : jugadores) {
+			if(jugador.getPosicion() >= 49) {
+				finalizada = true;
+				ganador = jugador;
+				lastEvent = jugador.getNombre() + " es el GANADOR!!";
+				break;
+			}
+		}
 	}
 }

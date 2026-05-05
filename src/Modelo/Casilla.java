@@ -4,7 +4,6 @@ public abstract class Casilla {
 	protected int posicion;
 	
 	public Casilla(int posicion) {
-		super();
 		this.posicion = posicion;
 	}
 	
@@ -16,5 +15,5 @@ public abstract class Casilla {
 		this.posicion = posicion;
 	}
 	
-	public abstract void realizarAccion();
+	public abstract void realizarAccion( Jugador jugador);
 }

@@ -25,4 +25,15 @@ public abstract class Item {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
+	public void sumarCantidad(int valor) {
+		this.cantidad += valor;
+	}
+	
+	public void restarCantidad(int valor) {
+		this.cantidad -= valor;
+		if (this.cantidad < 0) {
+			this.cantidad = 0;
+		}
+	}
 }

@@ -14,73 +14,77 @@ public class GestorBBDD {
 	private String username;
 	private String password;
 	
-	 public String getUr1BBDD() {
-	        return ur1BBDD;
-	    }
-
-	    public void setUr1BBDD(String ur1BBDD) {
-	        this.ur1BBDD = ur1BBDD;
-	    }
-
-	    public String getUsername() {
-	        return username;
-	    }
-
-	    public void setUsername(String username) {
-	        this.username = username;
-	    }
-
-	    public String getPassword() {
-	        return password;
-	    }
-
-	    public void setPassword(String password) {
-	        this.password = password;
-	    }
-
-
-	    // ✅ Guardar partida
-	    public void guardarBBDD(Partida p) {
-	        String sql = "INSERT INTO partidas (estado) VALUES (?)";
-
-	        try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password);
-	             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-	            Gson gson = new Gson();
-	            String json = gson.toJson(p);
-
-	            stmt.setString(1, json);  // ✅ "json" no "jason"
-	            stmt.executeUpdate();
-
-	            System.out.println("Partida guardada correctamente");
-
-	        } catch (SQLException e) {  // ✅ Sin espacio en "SQLException"
-	            e.printStackTrace();    // ✅ "printStackTrace" no "printStrackTrace"
-	        }
-	    }
-
-
-	    // ✅ Cargar partida
-	    public Partida cargarBBDD(int id) {
-	        String sql = "SELECT estado FROM partidas WHERE id = ?";
-	        Partida partida = null;
-
-	        try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password);  // ✅ URL correcta
-	             PreparedStatement stmt = conn.prepareStatement(sql)) {                        // ✅ stmt declarado
-
-	            stmt.setInt(1, id);
-	            ResultSet rs = stmt.executeQuery();
-
-	            if (rs.next()) {
-	                String json = rs.getString("estado");
-	                Gson gson = new Gson();
-	                partida = gson.fromJson(json, Partida.class);
-	            }
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-
-	        return partida;
-	    }
+	public String getUr1BBDD() {
+		return ur1BBDD;
+		
 	}
+	
+	public void setUr1BBDD(String ur1BBDD) {
+		this.ur1BBDD = ur1BBDD;
+		
+	}
+	
+	public String getUsername() { 
+		return username;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getPasword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+	// guardar partida
+	public void guardarBBDD(Partida p) {
+		String sql = "INSERT INTO partidas (estado) VALUES (?)";
+		
+		try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password)
+				PreparedStatement stmt = conn.prepareStatement(sql)) {
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(p);
+			
+			stmt.setString(1,json);
+			stmt.executeUpdate();
+			
+			System.out.println("Partida guardada correctamente");
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+	}
+	
+		// cargar partida
+	
+	public Partida cargarBBDD(int id) {
+		
+		String sql = "SELECT estado FROM partidas WHERE id = ?";
+		Partida partida = null;
+		
+		try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password);
+			PreparedStatement stmt = conn-prepareStatement(sql)){
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String json = rs.getString("estado");
+				
+				Gson gson = new Gson();
+				partida = gson.fromJson(json, Partida.class);
+			}
+		} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		return partida;
+	}
+	
+	
+}

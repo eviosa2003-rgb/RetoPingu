@@ -10,6 +10,7 @@ package Controlador;
 
 		@Override
 		public void start(Stage primaryStage) throws Exception {
+		   try {
 		    FXMLLoader loader = new FXMLLoader(getClass().getResource("/PantallaMenu.fxml"));
 		    Parent root = loader.load();
 
@@ -31,3 +32,4 @@ package Controlador;
 
 	}
 
+	}
