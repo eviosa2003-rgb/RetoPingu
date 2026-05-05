@@ -19,6 +19,12 @@ public class SueloQuebradizo extends Casilla {
 		
 		if(cantidad > 5) {
 			p.setPosicion(0);
+			return "Jugador: "+ p.getNombre() + " vuelve al inicio";
+		} else if (cantidad > 0 && cantidad <= 5){
+			p.perderTurno();
+			return "Jugador: "+ p.getNombre() + " pierde el turno";
+		}else {
+			return "Jugador: "+ p.getNombre() + " pasa sin penalización.";
 		}
 	}
 }
