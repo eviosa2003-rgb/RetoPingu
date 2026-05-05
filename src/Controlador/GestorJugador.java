@@ -2,6 +2,8 @@ package Controlador;
 
 import java.util.Random;
 
+import Modelo.BolaDeNieve;
+import Modelo.Dado;
 import Modelo.Foca;
 import Modelo.Item;
 import Modelo.Jugador;
@@ -11,40 +13,17 @@ import Modelo.Tablero;
 
 public class GestorJugador {
 	
-	Random r = new Random();
+	private Random random = new Random();
+
+	public boolean jugadorUsaItem(Pinguino jugador, String nombreItem) {
+		return jugador.getInv().gastarItem(nombreItem, 1);
+	}
 
 	
-	public void jugadorUsaItem(String nombreItem, Pinguino p) {
-		if (nombreItem.equals("bola")) {
-			
-			if (p.getBolasNieve()>0) {
-				p.setBolasNieve(p.getBolasNieve() -1);
-				System.out.println("Has usado una bola de nieve");
-			}
-			else if(nombreItem.equals("pez")) {
-				
-				if (p.getPeces()>0) {
-					p.setPeces(p.getPeces() -1);
-					System.out.println("Has usado un pez");
-					
-				}
-				else if (nombreItem.equals("dado")) {
-					
-					if (p.getDados()>0) {
-						int tirada = r.nextInt(6) +1;
-						p.setPosicion(p.getPosicion() + tirada);
-						p.setDados(p.getDados() -1);
-						System.out.println("Avanzas" + tirada);
-						
-					}
-				}
-			}
-		}
 	
-	}
 	
 	public void jugadorSeMueve(Jugador j, int pasos, Tablero t) {
-		int nuevaPos = j.getPosicion()+pasos;
+		int nuevaPos = j.getPosicion() +pasos;
 	
 		if(nuevaPos > 49) {
 			nuevaPos = 49;
@@ -58,69 +37,68 @@ public class GestorJugador {
 	}
 	
 	public void jugadorFinalizaTurno(Jugador j) {	
-		System.out.println(j.getNombre() + " termina turno");
+		if (j.saltarTurno()) {
+			j.consumirTurnoPerdido();
+		}
 	}
 	
 	public void pinguinoEvento(Pinguino p) {
 		
-		int num = r.nextInt(4); // 0-3
-		if (num == 0) {
-			p.setPeces(p.getPeces()+1);
-			System.out.println("Ganas un pez");
-		}
+		int evento = random.nextInt(6);
+		switch (evento) {
+		case 0:
+			p.añadirItem(new Pez("pez", 1));
+			break;
 		
-		if ( num == 1) {
-			p.setBolasNieve(p.getBolasNieve()+2);
-			System.out.println("Ganas 2 bolas de nieve");
-		}
-		if (num == 2) {
-			p.setPosicion(p.getPosicion()+3);
-			System.out.println("Avanzas 3");
-		}
-		if (num == 3) {
-			p.setTurnosPerdidos(1);
-			System.out.println("Pierdes turno");
-			}
-	}
-	
-	public void pingüinoGuerra(Pinguino p1, Pinguino p2) {
-	
-		int n1 = r.nextInt(6) + 1;
-		int n2 = r.nextInt(6) + 1;
-		
-		if (n1> n2) {
-			p2.setPosicion(p2.getPosicion() -2);
-			System.out.println("Gana p1");
+		case 1:
+			p.añadirItem(new BolaDeNieve ("bola", random.nextInt(3) + 1));
+			break;
 			
-		} 
-		else {
-			p1.setPosicion(p1.getPosicion() - 2);
-			System.out.println("Gana p2");
-		}	
-	}
-	
-	
-	public void focaInteractua(Pinguino p, Foca f) {
-		if (p.isProtegido()) {
-			System.out.println("No pasa nada (protegido)");
-			p.setProtegido(false);
-		}
-		else {
-			p.setPosicion(0);
-			System.out.println("La foca te manda al inicio");
-		}
+		case 2:
+			p.añadirItem(new Dado("rapidp", 1, 5, 10));
+			break;
+			
+		case 3:
+			p.añadirItem(new Dado("lento", 1, 1, 3));
+			break;
+			
+		case 4: 
+			p.perderTurno();
+			break;
 		
-		for(Item i : p.getInv().getLista()) {
-			if(i.getNombre().equalsIgnoreCase("pez")) {
-				tienePez = true;
-				p.quitarItem(new Pez("pez", 1));
-				break;
+		default:
+			Item item = p.getInv().buscarPorNombre("bola");
+			if (item == null) {
+				item = p.getInv().buscarPorNombre("pez");
 			}
-		}
-		if(!tienePez) {
-			f.aplastarJugador(p);
-			f.golpearJugador(p);	
+			if (item != null) {
+				item.restarCantidad(1);
+				p.getInv().eliminarVacios();
+			}
+			break;
 		}
 	}
+		
+	
+	
+	public String pingüinoGuerra(Pinguino p1, Pinguino p2) {
+		
+	return p1.gestionarBatalla(p2);
+	}
+	
+	public String focaInteractua(Pinguino p, Foca f, Tablero t) {
+		if (p.getInv().gastarItem("pez", 1)) {
+			f.setTurnoBloqueado(2);
+			f.setSoborno(true);
+			return "Foca_Interactua: " + p.getNombre() + "soborno a la foca con un pez.";
+		}
+		else {
+			int agujeroAnterior = t.buscarAgujeroAnterior(p.getPosicion());
+			p.setPosicion(agujeroAnterior);
+			return "Foca_Interactua: ¡La foca empuja a " + p.getNombre() + " a un agujero!";
+		}
+	}
+	
+	
 	
 }

@@ -9,6 +9,7 @@ import Modelo.Dado;
 import Modelo.Foca;
 import Modelo.Inventario;
 import Modelo.Jugador;
+import Modelo.Oso;
 import Modelo.Partida;
 import Modelo.Pinguino;
 
@@ -29,7 +30,7 @@ public class GestorPartida {
 	}
 	public void nuevaPartida(int numHumanos) {
 		this.partida = new Partida();
-		ArrayList<Jugador> Jugaodres = new ArrayList<Jugador>();
+		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 		System.out.println("¡Nueva partida creada!");
 		
 		String[] colores = {"Azul", "Rojo", "Verde", "Amarillo"};
@@ -37,8 +38,8 @@ public class GestorPartida {
 		for (int i= 0; i < numHumanos && i < 4; i ++) {
 			Inventario inv = new Inventario();
 			
-			inv.actualizar(new Dado("normal", 1, 1, 6),3);
-			jugadores.add(new Pinguino("Jugador " + (i + 1, colores[i], inv)));
+			inv.añadirItem(new Dado("normal", 1, 1, 6),3);
+			jugadores.add(new Pinguino("Jugador " + (i + 1), colores[i], 0, inv));
 		}
 		
 		Foca cpu = new Foca ("IA Foca", "Gris", 0);
@@ -46,21 +47,36 @@ public class GestorPartida {
 		
 		this.partida.setJugadores(jugadores);
 		this.partida.setJugadorActualIndice(0);
-		this.partida.setUltimoEvento("Partida preparada. Turno de  " + jugadores.get(0).getNombre());
+		this.partida.setLastEvent("Partida preparada. Turno de  " + jugadores.get(0).getNombre());
 		
 	}
+	
+	public void nuevaPartidaPersonalizada(ArrayList<Pinguino> humanos) {
+		this.partida = new Partida();
+		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+		
+		jugadores.addAll(humanos);
+		
+		Foca cpu = new Foca ("IA Foca", "Gris", 0);
+		jugadores.add(cpu);
+		
+		this.partida.setJugadores(jugadores);
+		this.partida.setJugadorActualIndice(0);
+		this.partida.setLastEvent("Parrtida personalizada preparada. Turno de " + jugadores.get(0));
+	}
+	
 	
 	public String jugarTurnoHumano(Dado dado) {
 		if (partida == null || partida.isFinalizada()) return "Partida no disponible.";
 		
-		Jugador actual = partida.getJugadorActual();
+		Jugador actual = partida.getTurnoActual();
 		
-		if (actual.saltarTruno()) {
+		if (actual.saltarTurno()) {
 			actual.consumirTurnoPerdido();
 			
 			String msj = actual.getNombre() + "Pierde su turno. ";
 			
-			partida.lastEvent(msj);
+			partida.setLastEvent(msj);
 			siguienteTurno();
 			return msj;
 		}
@@ -70,7 +86,7 @@ public class GestorPartida {
 		String mensaje = actual.getNombre() + " avanza " + resultado + " casillas.";
 		
 		if (actual instanceof Pinguino) {
-			Casilla casilla = partida.getTablero().getCasillas(actual.getPosicion());
+			Casilla casilla = partida.getTablero().getcasilla(actual.getPosicion());
 			
 			String msjCasilla = gestorTablero.ejecutarCasilla(partida, (Pinguino) actual, casilla);
 			
@@ -94,14 +110,14 @@ public class GestorPartida {
 	}
 	
 	public String ejecutarTurnoIA() {
-		Jugadoor actual = partida.getJugadorActual();
+		Jugador actual = partida.getTurnoActual();
 		if (!(actual instanceof Foca)) return null;
 		
 		Foca f = (Foca) actual;
 		String mensaje;
 		
-		if (f.getTurnoBloqueado > 0) {
-			f.setTurnoBloqueado(f.getTurnosBloqueada() - 1);
+		if (f.getTurnoBloqueado() > 0) {
+			f.setTurnoBloqueado(f.getTurnoBloqueado() - 1);
 			mensaje = "La foca esta comiendo pescado, esta distrahida en ello.";
 			
 		}
@@ -144,27 +160,28 @@ public class GestorPartida {
 			
 		}
 		
-	partida.setUltimoEvento(mensaje);
+	partida.setLastEvent(mensaje);
 	siguienteTurno();
 	return mensaje;
 		
 	}
 	
 	private String comprobarChoquesJugadores() {
-		StringBuldier sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < partida.getJugadores().size(); i++) {
 			for (int j= i + 1; j < partida.getJugadores().size(); j++) {
-				Jugador j1 = partida.getJugadres().get(i);
+				Jugador j1 = partida.getJugadores().get(i);
+				Jugador j2 = partida.getJugadores().get(j);
 				
-				if (j1.getPosicion() > 0 && j1.getPosicion() == j2.gwtPosicion()) {
+				if (j1.getPosicion() > 0 && j1.getPosicion() == j2.getPosicion()) {
 					sb.append(gestorJugador.pingüinoGuerra((Pinguino) j1, (Pinguino) j2)).append(" ");
 					
 				}
-				else if (j1 instanceof Pinguino && j2 instanceof Foca) {
+				else if (j1 instanceof Pinguino && j2 instanceof Pinguino) {
 					sb.append(gestorJugador.focaInteractua(Pinguino) j1, (Foca) j2, partida.getTablero())).append(" ");
 					
 				}
-				else if ( j1 instanceof Foca && j2 instanceof Pinguino) {
+				else if ( j1 instanceof Foca && j2 instanceof Foca) {
 					sb.append(gestorJugador.focaInteractua(Pinguino) j2, (Foca) j1, partida.getTablero())).append(" ");
 				}
 			}
