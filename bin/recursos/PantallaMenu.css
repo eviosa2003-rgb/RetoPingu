@@ -1,151 +1,184 @@
-/* ================================ */
-/*   PANTALLA MENÚ — TEMA PINGÜINO  */
-/* ================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+/* ============================================ */
+/*   PANTALLA MENÚ — PINGUI DINÀMIC             */
+/*   Tema àrtic: cel blau, gel, colors vius     */
+/* ============================================ */
 
 /* ROOT */
 .root {
-    -fx-font-family: "Nunito";
-    -fx-background-color: #b3e0f2;
+    -fx-font-family: "Arial Rounded MT Bold", "Arial", sans-serif;
+    /* El fons real el pinta fondoPane (canvas àrtic).
+       Color de fallback per si el canvas no ha carregat: */
+    -fx-background-color: #4ab8f0;
 }
 
-/* MENÚ */
+/* ─────────────────────────────────────────────
+   MENÚ BAR
+───────────────────────────────────────────── */
 .menu-bar {
     -fx-background-color: #1a3a5c;
     -fx-border-color: #0d2840;
-    -fx-border-width: 0 0 3 0;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 2 8;
 }
-
 .menu-bar .label {
     -fx-text-fill: #e0f4ff;
     -fx-font-weight: bold;
+    -fx-font-size: 13px;
 }
-
-.menu {
-    -fx-background-color: #1a3a5c;
-}
-
-.menu:hover, .menu:showing {
-    -fx-background-color: #0d2840;
-}
-
 .context-menu {
     -fx-background-color: #1a3a5c;
     -fx-border-color: #0d2840;
     -fx-border-width: 2;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
 }
-
-.menu-item {
-    -fx-background-color: transparent;
-}
-
 .menu-item .label {
     -fx-text-fill: #e0f4ff;
     -fx-font-size: 13px;
 }
-
 .menu-item:focused {
     -fx-background-color: #2f6fed;
-    -fx-background-radius: 6;
+    -fx-background-radius: 5;
 }
 
-/* TARJETA CENTRAL */
-.card {
-    -fx-background-color: #f0faff;
-    -fx-background-radius: 22;
-    -fx-border-color: #7ecef0;
-    -fx-border-width: 2.5;
-    -fx-border-radius: 22;
-    -fx-effect: dropshadow(gaussian, rgba(30,90,140,0.28), 20, 0.2, 0, 5);
+/* ─────────────────────────────────────────────
+   FONS PANE (canvas àrtic)
+───────────────────────────────────────────── */
+.fondo-pane {
+    /* Gradient de cel com a fallback si no hi ha canvas */
+    -fx-background-color: linear-gradient(to bottom, #4ab8f0 0%, #7dd4f8 60%, #aee8ff 100%);
 }
 
-/* TÍTULO */
-.title {
-    -fx-font-family: "Fredoka One";
-    -fx-font-size: 30px;
-    -fx-text-fill: #1a3a5c;
-    -fx-alignment: CENTER;
-    -fx-text-alignment: CENTER;
+/* ─────────────────────────────────────────────
+   TARGETA JUGADOR (dalt-esquerra)
+───────────────────────────────────────────── */
+.jugador-card {
+    -fx-background-color: rgba(15, 40, 70, 0.82);
+    -fx-background-radius: 14;
+    -fx-border-color: #4ab8f0;
+    -fx-border-width: 2;
+    -fx-border-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.2, 0, 3);
 }
-
-/* ETIQUETAS DE CAMPO */
-.field-label {
+.jugador-icon {
+    -fx-background-color: #2f6fed;
+    -fx-background-radius: 50%;
+    /* Substitueix per ImageView amb l'asset del pingüí */
+}
+.jugador-nom {
+    -fx-text-fill: #ffffff;
     -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-text-fill: #1a3a5c;
-    -fx-opacity: 0.85;
 }
-
-/* CAMPOS DE TEXTO */
-.field {
-    -fx-background-color: #e0f5ff;
-    -fx-background-radius: 12;
-    -fx-border-color: #7ecef0;
-    -fx-border-width: 2;
-    -fx-border-radius: 12;
-    -fx-text-fill: #1a3a5c;
-    -fx-prompt-text-fill: #7ecef0;
-    -fx-font-size: 14px;
-    -fx-padding: 8 12;
+.star-label {
+    -fx-text-fill: #fbbf24;
+    -fx-font-size: 13px;
 }
-
-.field:focused {
-    -fx-background-color: #cceeff;
-    -fx-border-color: #2f6fed;
-    -fx-effect: dropshadow(gaussian, rgba(47,111,237,0.25), 8, 0.2, 0, 0);
-}
-
-/* BOTONES */
-.button {
-    -fx-background-radius: 12;
-    -fx-padding: 9 18;
-    -fx-background-color: #d0ecfa;
-    -fx-text-fill: #1a3a5c;
+.jugador-punts {
+    -fx-text-fill: #fbbf24;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-border-color: #7ecef0;
+}
+
+/* ─────────────────────────────────────────────
+   BOTONS ICONA (trofeu, opcions, ajuda, compartir)
+───────────────────────────────────────────── */
+.icon-btn {
+    -fx-background-color: rgba(15, 40, 70, 0.80);
+    -fx-background-radius: 10;
+    -fx-border-color: #4ab8f0;
     -fx-border-width: 2;
-    -fx-border-radius: 12;
+    -fx-border-radius: 10;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16px;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 6, 0.2, 0, 2);
+}
+.icon-btn:hover {
+    -fx-background-color: rgba(47, 111, 237, 0.85);
+    -fx-border-color: #ffffff;
+}
+.icon-btn:pressed {
+    -fx-scale-x: 0.93;
+    -fx-scale-y: 0.93;
 }
 
-.button:hover {
-    -fx-background-color: #b3dff5;
-    -fx-border-color: #4db8e8;
+/* ─────────────────────────────────────────────
+   BOTÓ JUGAR (verd gran)
+───────────────────────────────────────────── */
+.btn-jugar {
+    -fx-background-color: #22c55e;
+    -fx-background-radius: 14;
+    -fx-border-color: #16a34a;
+    -fx-border-width: 2.5;
+    -fx-border-radius: 14;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 28;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 10, 0.3, 0, 4);
+}
+.btn-jugar:hover {
+    -fx-background-color: #16a34a;
+    -fx-border-color: #15803d;
+    -fx-effect: dropshadow(gaussian, rgba(22,163,74,0.5), 14, 0.4, 0, 4);
+}
+.btn-jugar:pressed {
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
 }
 
-.button:pressed {
-    -fx-background-color: #7ecef0;
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
+/* ─────────────────────────────────────────────
+   BOTONS MENÚ (Personatges, Rànquing, Botiga)
+───────────────────────────────────────────── */
+.btn-menu {
+    -fx-background-color: rgba(15, 40, 80, 0.80);
+    -fx-background-radius: 12;
+    -fx-border-color: #4ab8f0;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 22;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 8, 0.2, 0, 3);
+}
+.btn-menu:hover {
+    -fx-background-color: rgba(47, 111, 237, 0.85);
+    -fx-border-color: #ffffff;
+}
+.btn-menu:pressed {
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
 }
 
-.button.primary {
-    -fx-background-color: #1a3a5c;
-    -fx-text-fill: #b3e8ff;
-    -fx-border-color: #0d2840;
+/* ─────────────────────────────────────────────
+   CARTELLET ESLÒGAN (fusta)
+───────────────────────────────────────────── */
+.cartellet {
+    -fx-background-color: #8B5E3C;
+    -fx-background-radius: 10;
+    -fx-border-color: #5C3A1E;
+    -fx-border-width: 3;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.3, 2, 4);
+}
+.cartellet-text {
+    -fx-text-fill: #FFF8DC;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-}
-
-.button.primary:hover {
-    -fx-background-color: #0d2840;
-    -fx-text-fill: white;
-}
-
-.button.primary:pressed {
-    -fx-scale-x: 0.97;
-    -fx-scale-y: 0.97;
-}
-
-/* HINT */
-.hint {
-    -fx-font-size: 11px;
-    -fx-text-fill: #4a8aaa;
-    -fx-opacity: 0.85;
     -fx-text-alignment: CENTER;
     -fx-alignment: CENTER;
+}
+
+/* ─────────────────────────────────────────────
+   VERSIÓ (baix-dreta)
+───────────────────────────────────────────── */
+.versio-label {
+    -fx-text-fill: rgba(255,255,255,0.75);
+    -fx-font-size: 11px;
 }

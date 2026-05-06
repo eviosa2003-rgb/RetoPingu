@@ -1,9 +1,7 @@
 package Modelo;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
+
 
 public class Partida {
 	
