@@ -11,6 +11,7 @@ import Modelo.Item;
 import Modelo.Jugador;
 import Modelo.Oso;
 import Modelo.Partida;
+import Modelo.Pez;
 import Modelo.Pinguino;
 import Modelo.SueloQuebradizo;
 import Modelo.Trineo;
@@ -23,30 +24,30 @@ public class GestorTablero {
     String mensaje = "";
     	
     	if (casilla instanceof Oso) {
-    		mensaje = "OSO_ATAQUE";
+    		mensaje = "OSO_ATACA";
     		
     	}
     	else if (casilla instanceof Oso) {
-    		int destino = partida.getTablero().buscarAgujeroAnterior(jugador.getPosicion());
-    		jugador.setPosicion(destino);
-    		mensaje = jugador.getNombre() + "cae en un agujero y retroce a la casilla " + destino +".";
+    		int destino = partida.getTablero().buscarAgujeroAnterior(pinguino.getPosicion());
+    		pinguino.setPosicion(destino);
+    		mensaje = pinguino.getNombre() + "cae en un agujero y retroce a la casilla " + destino +".";
     		
     	}
     	else if (casilla instanceof Agujero) {
-    		int destino = partida.getTablero().buscarAgujeroAnterior(jugador.getPosicion());
-    		jugador.setPosicion(destino);
-    		mensaje = jugador.getNombre() + "cae en el último trineo y no avanza más.";
+    		int destino = partida.getTablero().buscarAgujeroAnterior(pinguino.getPosicion());
+    		pinguino.setPosicion(destino);
+    		mensaje = pinguino.getNombre() + "cae en el último trineo y no avanza más.";
     		
     	}
     	else if (casilla instanceof Trineo) {
-    		int destino = partida.getTablero().buscarAgujeroAnterior(jugador.getPosicion);
-    		if (destino != jugador.getPosicion()) {
-    			jugador.setPosicion(destino);
-    			mensaje = jugador.getNombre() + "usa un trineo y avanza hasta la casilla " + destino + ".";
+    		int destino = partida.getTablero().buscarAgujeroAnterior(pinguino.getPosicion());
+    		if (destino != pinguino.getPosicion()) {
+    			pinguino.setPosicion(destino);
+    			mensaje = pinguino.getNombre() + "usa un trineo y avanza hasta la casilla " + destino + ".";
     			
     		}
     		else {
-    			mensaje = jugador.getNombre() + " cae el último trineo y no avanza más.";
+    			mensaje = pinguino.getNombre() + " cae el último trineo y no avanza más.";
     			
     		}
     	}
@@ -55,56 +56,56 @@ public class GestorTablero {
     		
     		switch (evento) {
     		case 0:
-    			jugador.añadirItem(newPez("pez", 1));
-    			mensaje = jugador.getNombre() + " consigue 1 pez.";
+    			pinguino.añadirItem(new Pez("pez", 1));
+    			mensaje = pinguino.getNombre() + " consigue 1 pez.";
     			break;
     		case 1:
     			int bolas = (int) (Math.random());
-    			jugador.añadirItem(new BolaDeNieve("bola", bolas));
-    			mensaje = jugador.getNombre() + "consigue " + bolas + "bolas de nieve.";
+    			pinguino.añadirItem(new BolaDeNieve("bola", bolas));
+    			mensaje = pinguino.getNombre() + "consigue " + bolas + "bolas de nieve.";
     			break;
     			
     		case 2:
-    			jugador.añadirItem(new Dado ("rapido", 1, 5, 10));
-    			mensaje = jugador.gwNombre() + " consigue un dado rapido.";
+    			pinguino.añadirItem(new Dado ("rapido", 1, 5, 10));
+    			mensaje = pinguino.getNombre() + " consigue un dado rapido.";
     			break;
     			
     		case 3:
-    			jugador.añadirItem(new Dado ("lento", 1, 1, 3));
-    			mensaje = jugador.getNombre() + "consigue un dado lento";
+    			pinguino.añadirItem(new Dado ("lento", 1, 1, 3));
+    			mensaje = pinguino.getNombre() + "consigue un dado lento";
     			break;
     		
     		case 4:
-    			jugador.perderTurno();
-    			mensaje = jugador.getNombre() + "pierde un turno";
+    			pinguino.perderTurno();
+    			mensaje = pinguino.getNombre() + "pierde un turno";
     			break;
     			
     		default:
-    			Item item = jugador.getInv().buscarPorNombre("bola");
+    			Item item = pinguino.getInv().buscarPorNombre("bola");
     			
     			if (item == null) {
-    				item = jugador.getInv().buscarPorNombre("pez");
+    				item = pinguino.getInv().buscarPorNombre("pez");
     				
     			}
     			
     			if (item == null) {
-    				item = jugador.getInv().buscarPorNombre("rapido);");
+    				item = pinguino.getInv().buscarPorNombre("rapido);");
     				
     			}
     			
     			if (item == null) {
-    				item = jugador.getInv().buscarPorNombre("lento");
+    				item = pinguino.getInv().buscarPorNombre("lento");
     				
     			}
     			
     			if (item != null) {
     				item.restarCantidad(1);
-    				jugador.getInv().eliminarVacios();
-    				mensaje = jugador.getNombre() + "pierde 1 objeto del inventario.";
+    				pinguino.getInv().eliminarVacios();
+    				mensaje = pinguino.getNombre() + "pierde 1 objeto del inventario.";
     				
     			}
     			else {
-    				mensaje = jugador.getNombre() + "no tenia objetos que perder.";
+    				mensaje = pinguino.getNombre() + "no tenia objetos que perder.";
     				
     			}
     				
@@ -113,15 +114,16 @@ public class GestorTablero {
     			}
     		}
     	else if (casilla instanceof SueloQuebradizo) {
-    		mensaje = ((SueloQuebradizo) casilla).aplicarEfecto(jugador);
+    		mensaje = ((SueloQuebradizo) casilla).aplicarEfecto(pinguino);
     		
     	}
     	else {
-    		mensaje = jugador.getNombre() + "cae en una casilla normal";
+    		mensaje = pinguino.getNombre() + "cae en una casilla normal";
     		
     	}
     	partida.setLastEvent(mensaje);	
     	return mensaje;
     	}
+
     
 }

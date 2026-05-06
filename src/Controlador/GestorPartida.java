@@ -126,10 +126,10 @@ public class GestorPartida {
 			int pasos = random.nextInt(6) + 1;
 			gestorJugador.jugadorSeMueve(f, pasos, partida.getTablero());
 			int posicionNeva = f.getPosicion();
-			Casilla casillaDestino = partida.getTablero().getCasillas(posicionNueva);
+			Casilla casillaDestino = partida.getTablero().getcasilla(posicionNeva);
 			
 			if (casillaDestino instanceof Agujero) {
-				int destinoA = partida.getTablero().buscarAgujeroAnterior(posicionNueva);
+				int destinoA = partida.getTablero().buscarAgujeroAnterior(posicionNeva);
 				f.setPosicion(destinoA);
 				mensaje = "La foca (IA) cae en un agujerp y retrocede.";
 			
@@ -146,7 +146,7 @@ public class GestorPartida {
 			
 			for (Jugador j : partida.getJugadores()) {
 				if (j instanceof Pinguino) {
-					if (j.getPosicion() > posicionAnterior && j.getPosicion() < posicionNueva) {
+					if (j.getPosicion() > posicionAnterior && j.getPosicion() < posicionNeva) {
 						f.aplastarJugador((Pinguino) j);
 						partida.setLastEvent("La foca pasó por encima de " + j.getNombre() + "y pierde el turno. ");
 					}
@@ -178,11 +178,11 @@ public class GestorPartida {
 					
 				}
 				else if (j1 instanceof Pinguino && j2 instanceof Pinguino) {
-					sb.append(gestorJugador.focaInteractua(Pinguino) j1, (Foca) j2, partida.getTablero())).append(" ");
+					sb.append(gestorJugador.focaInteractua((Pinguino) j1, (Foca) j2, partida.getTablero())).append(" ");
 					
 				}
 				else if ( j1 instanceof Foca && j2 instanceof Foca) {
-					sb.append(gestorJugador.focaInteractua(Pinguino) j2, (Foca) j1, partida.getTablero())).append(" ");
+					sb.append(gestorJugador.focaInteractua((Pinguino) j2, (Foca) j1, partida.getTablero())).append(" ");
 				}
 			}
 		}
@@ -196,10 +196,10 @@ public class GestorPartida {
 		return this.partida;
 	}
 	public void guardarPartida() {
-		gestorBBDD.guardarBBDD(partida);
+		gestorBBDD.guardarPartida(partida);
 	}
 	public void cargarPartida(int id) {
-		Partida cargada = gestorBBDD.guardarBBDD(partida);
+		Partida cargada = gestorBBDD.cargarPartida(id);
 		if (cargada != null) this.partida = cargada;
 	}
 	

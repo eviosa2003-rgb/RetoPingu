@@ -24,12 +24,12 @@ package Controlador;
 			System.out.println("Error al cargar la pantalla");
 			e.printStackTrace();
 		}
-
+		}
 	    public static void main(String[] args) {
 	        launch(args);
 	    }
 
 
-	}
-
-	}
+}
+	
+	

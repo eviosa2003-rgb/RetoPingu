@@ -6,5 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/ojdbc11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

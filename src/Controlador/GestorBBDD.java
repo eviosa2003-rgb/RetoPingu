@@ -6,13 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 import Modelo.Partida;
 
 public class GestorBBDD {
 	
 	private String ur1BBDD;
-	private String username;
-	private String password;
+	private String DM1_2526_GRUP03;
+	private String AGRUP03;
 	
 	public String getUr1BBDD() {
 		return ur1BBDD;
@@ -25,66 +26,32 @@ public class GestorBBDD {
 	}
 	
 	public String getUsername() { 
-		return username;
+		return DM1_2526_GRUP03;
 	}
 	
 	public void setUsername(String username) {
-		this.username = username;
+		this.DM1_2526_GRUP03 = username;
 	}
 	
 	public String getPasword() {
-		return password;
+		return AGRUP03;
 	}
 	
 	public void setPassword(String password) {
-		this.password = password;
+		this.AGRUP03 = password;
 	}
 	
-	
-	// guardar partida
-	public void guardarBBDD(Partida p) {
-		String sql = "INSERT INTO partidas (estado) VALUES (?)";
-		
-		try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password)
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
-			
-			Gson gson = new Gson();
-			String json = gson.toJson(p);
-			
-			stmt.setString(1,json);
-			stmt.executeUpdate();
-			
-			System.out.println("Partida guardada correctamente");
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-			
-		}
+	public void guardarPartida(Partida p) {
+	System.out.println("Partida guardada ");
 	}
 	
-		// cargar partida
-	
-	public Partida cargarBBDD(int id) {
-		
-		String sql = "SELECT estado FROM partidas WHERE id = ?";
-		Partida partida = null;
-		
-		try (Connection conn = DriverManager.getConnection(ur1BBDD, username, password);
-			PreparedStatement stmt = conn-prepareStatement(sql)){
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				String json = rs.getString("estado");
-				
-				Gson gson = new Gson();
-				partida = gson.fromJson(json, Partida.class);
-			}
-		} 
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
-		return partida;
+	public Partida cargarPartida (int id) {
+		System.out.println("Cargando partida con id= " + id );
+		return null;
 	}
 	
+	public void guardarTurnoActual(Partida p) {
+		System.out.println(" Turno actual guardado");
+	}
 	
 }
