@@ -6,5 +6,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/ojdbc11.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/javaFX">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
