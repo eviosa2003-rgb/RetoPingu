@@ -19,14 +19,22 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import controlador.GestorPartida;
-import modelo.*;
+import Controlador.GestorPartida;
+import Modelo.BolaDeNieve;
+import Modelo.Casilla;
+import Modelo.Dado;
+import Modelo.Inventario;
+import Modelo.Item;
+import Modelo.Jugador;
+import Modelo.Pez;
+import Modelo.Pinguino;
+import Modelo.Tablero;
 
 public class PantallaJuego {
 
-    // -------------------------------------------------------------------------
+  
     // FXML
-    // -------------------------------------------------------------------------
+    
 
     @FXML private MenuItem newGame;
     @FXML private MenuItem saveGame;
@@ -52,9 +60,9 @@ public class PantallaJuego {
     @FXML private Circle P3;
     @FXML private Circle P4;
 
-    // -------------------------------------------------------------------------
+    
     // Estado interno
-    // -------------------------------------------------------------------------
+    
 
     private GestorPartida gestorPartida;
     private int p1Position = 0;
@@ -62,9 +70,7 @@ public class PantallaJuego {
     private static final String TAG_CASILLA_TEXT = "CASILLA_TEXT";
     private final Random rand = new Random();
 
-    // -------------------------------------------------------------------------
     // Inicialización
-    // -------------------------------------------------------------------------
 
     @FXML
     private void initialize() {
@@ -79,9 +85,7 @@ public class PantallaJuego {
         Dado dadoItem = new Dado("normal", 1, 1, 6);
         inventario.getLista().add(dadoItem);
 
-        // Items de uso: Trineo (rápido), Pez, BolaDeNieve
-        // Trineo es casilla, no item → los botones rápido/lento usan
-        // directamente movimiento de posición
+        // Items de uso
         Pez pezItem = new Pez("pez", 2);
         BolaDeNieve bolaItem = new BolaDeNieve("bola", 2);
         inventario.getLista().add(pezItem);
@@ -96,9 +100,8 @@ public class PantallaJuego {
         actualizarContadoresItems();
     }
 
-    // -------------------------------------------------------------------------
+    
     // Tablero
-    // -------------------------------------------------------------------------
 
     private void mostrarTiposDeCasillasEnTablero(Tablero t) {
         tablero.getChildren().removeIf(node -> TAG_CASILLA_TEXT.equals(node.getUserData()));
@@ -124,9 +127,7 @@ public class PantallaJuego {
         }
     }
 
-    // -------------------------------------------------------------------------
     // Menú
-    // -------------------------------------------------------------------------
 
     @FXML
     private void handleNewGame(ActionEvent event) {
@@ -167,11 +168,9 @@ public class PantallaJuego {
     @FXML
     private void handleLoadGame() {
         System.out.println("Cargando partida...");
-        // Cargamos la partida con id=1 (la más reciente)
         gestorPartida.cargarPartida(1);
 
         if (gestorPartida.getPartida() != null) {
-            // Sincronizar posición visual del jugador
             Jugador j = gestorPartida.getPartida().getJugadorActual();
             if (j != null) {
                 p1Position = j.getPosicion();
@@ -200,14 +199,11 @@ public class PantallaJuego {
             stage.setTitle("Menú Principal");
         } catch (Exception e) {
             e.printStackTrace();
-            // Si falla la navegación, cerramos directamente
             System.exit(0);
         }
     }
 
-    // -------------------------------------------------------------------------
     // Dado
-    // -------------------------------------------------------------------------
 
     @FXML
     private void handleDado(ActionEvent event) {
@@ -222,7 +218,6 @@ public class PantallaJuego {
 
         dadoResultText.setText("Ha salido: " + resultado);
 
-        // Comprobar si el jugador ha ganado (posición 49)
         if (pingu.getPosicion() >= 49) {
             eventos.setText("🎉 ¡" + pingu.getNombre() + " ha llegado a la meta!");
             dado.setDisable(true);
@@ -237,9 +232,7 @@ public class PantallaJuego {
         moveP1(resultado);
     }
 
-    // -------------------------------------------------------------------------
     // Movimiento animado del jugador
-    // -------------------------------------------------------------------------
 
     private void moveP1(int steps) {
         dado.setDisable(true);
@@ -276,14 +269,8 @@ public class PantallaJuego {
         slide.play();
     }
 
-    // -------------------------------------------------------------------------
     // Botones de items
-    // -------------------------------------------------------------------------
 
-    /**
-     * RÁPIDO – mueve al jugador 3 casillas hacia adelante (efecto Trineo).
-     * Coste: 0 items (es una acción especial de turno).
-     */
     @FXML
     private void handleRapido() {
         Pinguino pingu = getPinguino();
@@ -298,10 +285,6 @@ public class PantallaJuego {
         System.out.println("Rápido: +" + pasos + " posición: " + pingu.getPosicion());
     }
 
-    /**
-     * LENTO – retrocede al jugador 2 casillas (efecto Foca).
-     * Coste: 0 items.
-     */
     @FXML
     private void handleLento() {
         Pinguino pingu = getPinguino();
@@ -316,15 +299,11 @@ public class PantallaJuego {
         System.out.println("Lento: " + pasos + " posición: " + pingu.getPosicion());
     }
 
-    /**
-     * PECES – usa un Pez del inventario para avanzar 1 casilla extra.
-     */
     @FXML
     private void handlePeces() {
         Pinguino pingu = getPinguino();
         if (pingu == null) return;
 
-        // Buscar el item Pez en el inventario
         Item pezItem = buscarItem(pingu, "pez");
 
         if (pezItem == null || pezItem.getCantidad() <= 0) {
@@ -333,7 +312,6 @@ public class PantallaJuego {
             return;
         }
 
-        // Gastar un pez
         pezItem.setCantidad(pezItem.getCantidad() - 1);
 
         int pasos = 1;
@@ -346,9 +324,6 @@ public class PantallaJuego {
         System.out.println("Pez usado. Quedan: " + pezItem.getCantidad());
     }
 
-    /**
-     * NIEVE – usa una BolaDeNieve para protegerse de la siguiente Foca.
-     */
     @FXML
     private void handleNieve() {
         Pinguino pingu = getPinguino();
@@ -362,20 +337,17 @@ public class PantallaJuego {
             return;
         }
 
-        // Gastar una bola
         bolaItem.setCantidad(bolaItem.getCantidad() - 1);
 
-        // TODO: activar flag protegido cuando Pinguino tenga isProtegido()
         eventos.setText(pingu.getNombre() + " usa una BOLA DE NIEVE → protegido de la siguiente Foca. Bolas restantes: " + bolaItem.getCantidad());
         actualizarContadoresItems();
         System.out.println("Bola de nieve usada. Quedan: " + bolaItem.getCantidad());
     }
 
-    // -------------------------------------------------------------------------
+    
     // Helpers
-    // -------------------------------------------------------------------------
+   
 
-    /** Devuelve el primer Pinguino de la partida o null si no hay. */
     private Pinguino getPinguino() {
         if (gestorPartida.getPartida() == null
                 || gestorPartida.getPartida().getJugadores().isEmpty()) {
@@ -384,7 +356,6 @@ public class PantallaJuego {
         return (Pinguino) gestorPartida.getPartida().getJugadores().get(0);
     }
 
-    /** Busca un Item en el inventario del pingüino por nombre (ignore case). */
     private Item buscarItem(Pinguino p, String nombre) {
         for (Item item : p.getInv().getLista()) {
             if (item.getNombre().equalsIgnoreCase(nombre)) {
@@ -394,7 +365,6 @@ public class PantallaJuego {
         return null;
     }
 
-    /** Actualiza los textos que muestran la cantidad de cada item. */
     private void actualizarContadoresItems() {
         Pinguino pingu = getPinguino();
         if (pingu == null) return;
@@ -402,8 +372,8 @@ public class PantallaJuego {
         Item pez  = buscarItem(pingu, "pez");
         Item bola = buscarItem(pingu, "bola");
 
-        if (peces_t != null)  peces_t.setText("Peces: "         + (pez  != null ? pez.getCantidad()  : 0));
-        if (nieve_t != null)  nieve_t.setText("Bolas de nieve: " + (bola != null ? bola.getCantidad() : 0));
+        if (peces_t != null)  peces_t.setText("Peces: "          + (pez  != null ? pez.getCantidad()  : 0));
+        if (nieve_t != null)  nieve_t.setText("Bolas de nieve: "  + (bola != null ? bola.getCantidad() : 0));
     }
 
     private void deshabilitarBotonesItems() {

@@ -1,27 +1,27 @@
 package Controlador;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Modelo.Partida;
 
+/**
+ * GestorBBDD - Gestión de la base de datos.
+ * Los métodos de persistencia son stubs funcionales que no requieren
+ * librerías externas (Gson) ni conexión de base de datos activa.
+ */
 public class GestorBBDD {
 	
-	private String ur1BBDD;
+	private String urlBBDD;
 	private String username;
 	private String password;
 	
-	public String getUr1BBDD() {
-		return ur1BBDD;
-		
+	public String getUrlBBDD() {
+		return urlBBDD;
 	}
 	
-	public void setUr1BBDD(String ur1BBDD) {
-		this.ur1BBDD = ur1BBDD;
-		
+	public void setUrlBBDD(String urlBBDD) {
+		this.urlBBDD = urlBBDD;
 	}
 	
-	public String getUsername() { 
+	public String getUsername() {
 		return username;
 	}
 	
@@ -29,7 +29,7 @@ public class GestorBBDD {
 		this.username = username;
 	}
 	
-	public String getPasword() {
+	public String getPassword() {
 		return password;
 	}
 	
@@ -37,6 +37,7 @@ public class GestorBBDD {
 		this.password = password;
 	}
 	
+<<<<<<< Updated upstream
 	
 	// guardar partida
 	public void guardarBBDD(Partida p) {
@@ -81,7 +82,21 @@ public class GestorBBDD {
 			}
 		
 		return partida;
+=======
+	/** Guarda el estado de la partida */
+	public void guardarPartida(Partida p) {
+		System.out.println("Partida guardada (stub - sin conexión BD).");
 	}
 	
+	/** Carga una partida por ID */
+	public Partida cargarPartida(int id) {
+		System.out.println("Cargando partida con id=" + id + " (stub - sin conexión BD).");
+		return null;
+>>>>>>> Stashed changes
+	}
 	
+	/** Guarda el turno actual de la partida */
+	public void guardarTurnoActual(Partida p) {
+		System.out.println("Turno actual guardado (stub - sin conexión BD).");
+	}
 }

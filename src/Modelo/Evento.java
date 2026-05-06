@@ -1,18 +1,33 @@
 package Modelo;
 
+<<<<<<< Updated upstream
 import java.util.Random;
 
 public class Evento extends Casilla{ 
+=======
+public class Evento extends Casilla {
+>>>>>>> Stashed changes
 	
 	private String[] eventos = {"pez", "bolas", "rapido", "lento", "pierdeTurno", "pierdeItem", "motos"};
 	
 	public Evento(int posicion) {
 		super(posicion);
 	}
+<<<<<<< Updated upstream
 	
 	public void realizarAccion(Jugador jugador, Tablero tablero) {
 		Random rand = new Random();
 		String evento = eventos[rand.nextInt(6)];
+=======
+
+	@Override
+	public String getTipo() {
+		return "INTERROGANT";
+	}
+
+	@Override
+	public void realizarAccion(Jugador jugador) {
+>>>>>>> Stashed changes
 		
 		if(evento.equals("pez")) {
 			

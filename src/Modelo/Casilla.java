@@ -16,5 +16,11 @@ public abstract class Casilla {
 		this.posicion = posicion;
 	}
 	
+<<<<<<< Updated upstream
 	public abstract void realizarAccion(Jugador jugador, Tablero tablero );
+=======
+	public abstract String getTipo();
+	
+	public abstract void realizarAccion(Jugador jugador);
+>>>>>>> Stashed changes
 }

@@ -6,6 +6,7 @@ public class GestorJugador {
 	
 	Random r = new Random();
 
+<<<<<<< Updated upstream
 	
 	public void jugadorUsaItem(String nombreItem, Pinguino p) {
 		if (nombreItem.equals("bols")) {
@@ -33,11 +34,16 @@ public class GestorJugador {
 			}
 		}
 	
+=======
+	public void jugadorUsaItem(String nombreItem) {
+		// TODO: implementar uso de item por nombre
+>>>>>>> Stashed changes
 	}
 	
 	public void jugadorSeMueve(Jugador j, int pasos, Tablero t) {
-		int nuevaPos = j.getPosicion()+pasos;
+		int nuevaPos = j.getPosicion() + pasos;
 	
+<<<<<<< Updated upstream
 	
 	if(nuevaPos > 49) {
 		nuevaPos = 49;
@@ -62,6 +68,19 @@ public class GestorJugador {
 			System.out.println("Turno terminado");
 		}
 		
+=======
+		if (nuevaPos > 49) {
+			nuevaPos = 49;
+		}
+		if (nuevaPos < 0) {
+			nuevaPos = 0;
+		}
+		j.setPosicion(nuevaPos);
+	}
+	
+	public void jugadorFinalizaTurno(Jugador j) {
+		System.out.println(j.getNombre() + " termina turno");
+>>>>>>> Stashed changes
 	}
 	
 	public void pinguinoEvento(Pinguino p) {
@@ -115,6 +134,19 @@ public class GestorJugador {
 			System.out.println("La foca te manda al inicio");
 		}
 		
+<<<<<<< Updated upstream
+=======
+		for (Item i : p.getInv().getLista()) {
+			if (i.getNombre().equalsIgnoreCase("pez")) {
+				tienePez = true;
+				p.quitarItem(new Pez("pez", 1));
+				break;
+			}
+		}
+		if (!tienePez) {
+			f.aplastarJugador(p);
+			f.golpearJugador(p);
+		}
+>>>>>>> Stashed changes
 	}
-	
 }
