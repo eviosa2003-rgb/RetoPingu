@@ -1,6 +1,17 @@
 package Controlador;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import Modelo.Agujero;
+import Modelo.Casilla;
+import Modelo.Dado;
+import Modelo.Foca;
+import Modelo.Inventario;
+import Modelo.Jugador;
+import Modelo.Oso;
+import Modelo.Partida;
+import Modelo.Pinguino;
 
 public class GestorPartida {
 	private Partida partida;
@@ -8,124 +19,195 @@ public class GestorPartida {
 	private GestorBBDD gestorBBDD;
 	private Random random;
 	private Jugador jugador;
+	private GestorJugador gestorJugador;
 	
 	public GestorPartida() {
 		this.partida = null;
 		this.gestorTablero = new GestorTablero();
 		this.gestorJugador = new GestorJugador();
-		this.gestorBBDD = new Gestor BBDD();
+		this.gestorBBDD = new GestorBBDD();
 		this.random = new Random();
 	}
-	public void nuevaPartida() {
+	public void nuevaPartida(int numHumanos) {
 		this.partida = new Partida();
+		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
 		System.out.println("¡Nueva partida creada!");
 		
-	}
-
-    public int tirarDado(Jugador j, Dado dado) {
-    	int resultado = dado.tirar(random);
-    	System.out.println(jugador.getNombre() + "ha sacado un" + resultado);
-    	
-    	gestorJugador.jugadorSeMueve(j, resultado, this.partida.getTablero());
-    	
-    	return resultado;
-    }
-   
-    // Ejecuta el turno completo del jugador que toca jugar
-
-    public void ejecutarTurnoCompleto() {
-    	if (this.partida == null) {
-    		System.out.println(" No hay ninguna partida activa. ");
-    		return;
-    	}
-    	Jugador jugadorActual = this.partida.getJugadorActual();
-    	
-    	if (jugadorActual.tieneTurnoBloqueado()) {
-    		System.out.println(jugadorActual.getNombre() + "pierde el turno.");
-    		jugadorActual.desbloquearTurno();
-    		siguienteTurno();
-    		return;
-    	}
-    	procesarturnoJugador(jugadorActual);
-    	
-    	actualizarEstadoTablero();
-    	
-    	guardarPartida();
-    	
-    	siguienteTurno();
-    	
-    	
-    }
-
-    
-    
-    
-    
-    public void procesarTurnoJugador(Jugador jugador) {
+		String[] colores = {"Azul", "Rojo", "Verde", "Amarillo"};
 		
-    	System.out.println("Turno de: " + jugador.getNombre());
-    	
-    	Dado dado = new Dado();
-    	
-    	if (jugador.getInventario().tieneDado()) {
-    		dado = jugador.getInventario().usarDado();
-    		System.out.println(jugador.getNombre() + "usa un dado especial. ");
-    		
-    	}
-    	int resultado = tirarDado (jugador, dado);
-    	
-    	int posicion = jugador.getPosicion();
-    	
-    	Casilla casilla = this.partida.getTablero().getCasilla(posicion);
-    	
-    	gestorTablero.ejecutarCasilla(this.partida, jugador.getPinguino(), casilla);
-   
-    }
-
-    
-    public void actualizarEstadoTablero() {
-    	
-    	gestorTablero.comprobarFinTurno(this.partida);
-    
-    }
-
-    public void siguienteTurno() {
-
-    this.partida.pasarAlSiguienteJugador();
-    Jugador siguiente = this.partida.getJugadorActual();
-    
-    System.out.println("Ahora le toca a: " + siguiente.getNombre());
-    
-    gestorBBDD.guardarTurnoActual(this.partida);
-    
-    }
-
-    public Partida getPartida() {
-        return this.partida;
-    }
-
-    public void guardarPartida() {
-    	
-    	if (this.partida !=null) {
-    		gestorBBDD.guardarPartida(this.partida);
-    		System.out.println("Partida guardda correctamente. ");
-    	}
-    	else {
-    		System.out.println("No hay partida para guardar. ");
-    	}
-    
-    }
-
-    public void cargarPartida(int id) {
-        this.partida = gestorBBDD.cargarPartida(id);
-        
-        if(this.partida != null) {
-        	System.out.println("Partida cargada correctamente. ");
-        	
-        }
-        else {
-        	System.out.println("No se ha encontrado ninguna partida con ese ID.");
-        }
-    }
+		for (int i= 0; i < numHumanos && i < 4; i ++) {
+			Inventario inv = new Inventario();
+			
+			inv.añadirItem(new Dado("normal", 1, 1, 6),3);
+			jugadores.add(new Pinguino("Jugador " + (i + 1), colores[i], 0, inv));
+		}
+		
+		Foca cpu = new Foca ("IA Foca", "Gris", 0);
+		jugadores.add(cpu);
+		
+		this.partida.setJugadores(jugadores);
+		this.partida.setJugadorActualIndice(0);
+		this.partida.setLastEvent("Partida preparada. Turno de  " + jugadores.get(0).getNombre());
+		
+	}
+	
+	public void nuevaPartidaPersonalizada(ArrayList<Pinguino> humanos) {
+		this.partida = new Partida();
+		ArrayList<Jugador> jugadores = new ArrayList<Jugador>();
+		
+		jugadores.addAll(humanos);
+		
+		Foca cpu = new Foca ("IA Foca", "Gris", 0);
+		jugadores.add(cpu);
+		
+		this.partida.setJugadores(jugadores);
+		this.partida.setJugadorActualIndice(0);
+		this.partida.setLastEvent("Parrtida personalizada preparada. Turno de " + jugadores.get(0));
+	}
+	
+	
+	public String jugarTurnoHumano(Dado dado) {
+		if (partida == null || partida.isFinalizada()) return "Partida no disponible.";
+		
+		Jugador actual = partida.getTurnoActual();
+		
+		if (actual.saltarTurno()) {
+			actual.consumirTurnoPerdido();
+			
+			String msj = actual.getNombre() + "Pierde su turno. ";
+			
+			partida.setLastEvent(msj);
+			siguienteTurno();
+			return msj;
+		}
+		
+		int resultado = dado.tirar(random);
+		gestorJugador.jugadorSeMueve(actual, resultado, partida.getTablero());
+		String mensaje = actual.getNombre() + " avanza " + resultado + " casillas.";
+		
+		if (actual instanceof Pinguino) {
+			Casilla casilla = partida.getTablero().getcasilla(actual.getPosicion());
+			
+			String msjCasilla = gestorTablero.ejecutarCasilla(partida, (Pinguino) actual, casilla);
+			
+			if (msjCasilla != null) mensaje += " " + msjCasilla;
+			String choques = comprobarChoquesJugadores();
+			
+			if (!choques.isEmpty()) {
+				mensaje += " | " + choques;
+			}
+		
+		}
+		
+		partida.comprobarGanador();
+		
+		if (!partida.isFinalizada()){
+			siguienteTurno();
+		}
+		
+		return mensaje;
+		
+	}
+	
+	public String ejecutarTurnoIA() {
+		Jugador actual = partida.getTurnoActual();
+		if (!(actual instanceof Foca)) return null;
+		
+		Foca f = (Foca) actual;
+		String mensaje;
+		
+		if (f.getTurnoBloqueado() > 0) {
+			f.setTurnoBloqueado(f.getTurnoBloqueado() - 1);
+			mensaje = "La foca esta comiendo pescado, esta distrahida en ello.";
+			
+		}
+		else {
+			int posicionAnterior = f.getPosicion();
+			int pasos = random.nextInt(6) + 1;
+			gestorJugador.jugadorSeMueve(f, pasos, partida.getTablero());
+			int posicionNeva = f.getPosicion();
+			Casilla casillaDestino = partida.getTablero().getcasilla(posicionNeva);
+			
+			if (casillaDestino instanceof Agujero) {
+				int destinoA = partida.getTablero().buscarAgujeroAnterior(posicionNeva);
+				f.setPosicion(destinoA);
+				mensaje = "La foca (IA) cae en un agujerp y retrocede.";
+			
+			}
+			else if (casillaDestino instanceof Oso){
+				f.setPosicion(0);
+				mensaje = "La foca (IA) se asusta del oso y huye al inicio.";
+				
+			}
+			else {
+				mensaje = "La foca (IA) se mueve " + pasos + " casillas";
+				
+			}
+			
+			for (Jugador j : partida.getJugadores()) {
+				if (j instanceof Pinguino) {
+					if (j.getPosicion() > posicionAnterior && j.getPosicion() < posicionNeva) {
+						f.aplastarJugador((Pinguino) j);
+						partida.setLastEvent("La foca pasó por encima de " + j.getNombre() + "y pierde el turno. ");
+					}
+				}
+			}
+			
+			String choques = comprobarChoquesJugadores();
+			if (!choques.isEmpty()) {
+				mensaje += " | " + choques;
+			}
+			
+		}
+		
+	partida.setLastEvent(mensaje);
+	siguienteTurno();
+	return mensaje;
+		
+	}
+	
+	private String comprobarChoquesJugadores() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < partida.getJugadores().size(); i++) {
+			for (int j= i + 1; j < partida.getJugadores().size(); j++) {
+				Jugador j1 = partida.getJugadores().get(i);
+				Jugador j2 = partida.getJugadores().get(j);
+				
+				if (j1.getPosicion() > 0 && j1.getPosicion() == j2.getPosicion()) {
+					sb.append(gestorJugador.pingüinoGuerra((Pinguino) j1, (Pinguino) j2)).append(" ");
+					
+				}
+				else if (j1 instanceof Pinguino && j2 instanceof Pinguino) {
+					sb.append(gestorJugador.focaInteractua((Pinguino) j1, (Foca) j2, partida.getTablero())).append(" ");
+					
+				}
+				else if ( j1 instanceof Foca && j2 instanceof Foca) {
+					sb.append(gestorJugador.focaInteractua((Pinguino) j2, (Foca) j1, partida.getTablero())).append(" ");
+				}
+			}
+		}
+		return sb.toString().trim();
+	}
+	public void siguienteTurno() {
+		partida.siguienteTurno();
+	}
+	
+	public Partida getPartida() { 
+		return this.partida;
+	}
+	public void guardarPartida() {
+		gestorBBDD.guardarPartida(partida);
+	}
+	public void cargarPartida(int id) {
+		Partida cargada = gestorBBDD.cargarPartida(id);
+		if (cargada != null) this.partida = cargada;
+	}
+	
+	
+	
+	
+	
+	
+	
 }
 

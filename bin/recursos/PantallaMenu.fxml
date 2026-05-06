@@ -6,77 +6,147 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane
-    xmlns="http://javafx.com/javafx/21.0.10"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="vista.PantallaMenu"
-    stylesheets="@PantallaMenu.css"
-    styleClass="root">
+<BorderPane prefHeight="430" prefWidth="680" styleClass="root" stylesheets="@PantallaMenu.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.PantallaMenu">
 
+    <!-- ═══════════════════════════════════════
+         TOP: MenuBar
+    ═══════════════════════════════════════ -->
     <top>
-        <MenuBar>
+        <MenuBar styleClass="menu-bar">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="newGame" mnemonicParsing="false" text="New" />
+                        <MenuItem fx:id="newGame" mnemonicParsing="false" onAction="#handleNewGame" text="New" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="saveGame" mnemonicParsing="false" text="Save" />
-                        <MenuItem fx:id="loadGame" mnemonicParsing="false" text="Load" />
+                        <MenuItem fx:id="saveGame" mnemonicParsing="false" onAction="#handleSaveGame" text="Save" />
+                        <MenuItem fx:id="loadGame" mnemonicParsing="false" onAction="#handleLoadGame" text="Load" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="quitGame" mnemonicParsing="false" text="Quit" />
+                        <MenuItem fx:id="quitGame" mnemonicParsing="false" onAction="#handleQuitGame" text="Quit" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
     </top>
 
+    <!-- ═══════════════════════════════════════
+         CENTER: Fons + UI
+    ═══════════════════════════════════════ -->
     <center>
         <StackPane>
-            <padding>
-                <Insets top="28" right="28" bottom="28" left="28"/>
-            </padding>
 
-            <VBox spacing="16" styleClass="card" maxWidth="420">
+                              <!-- ─────────────────────────────
+                 CAPA 0: Fons àrtic
+                                   El controlador pinta aquí el
+                                   paisatge (Canvas o ImageView).
+                                   Afegeix la imatge exportada
+                                   com a fons_arctic.png als recursos
+                                   i substitueix el Pane per:
+                                     <ImageView fx:id="fondoImg"
+                                       image="@fons_arctic.png"
+                                       fitWidth="680" fitHeight="430"
+                                       preserveRatio="false"/>
+                              ───────────────────────────── -->
+           <ImageView fx:id="fondoImg" fitHeight="466.0" fitWidth="742.0" preserveRatio="false">
+    <image>
+               <Image url="@fons_arctic.png.png" />
+    </image>
+</ImageView>
+
+            <!-- ─────────────────────────────
+                 CAPA 1: UI principal
+            ───────────────────────────── -->
+            <BorderPane>
                 <padding>
-                    <Insets top="18" right="18" bottom="18" left="18"/>
+                    <Insets bottom="10" left="14" right="14" top="10" />
                 </padding>
 
-                <!-- Cabecera -->
-                <VBox spacing="6" alignment="CENTER">
-                    <Label text="EL JUEGO DEL PINGÜINO" styleClass="title" wrapText="true"/>
-                </VBox>
+                <!-- TOP UI: Targeta jugador (esquerra) + Icones (dreta) -->
+                <top>
+                    <HBox alignment="CENTER_LEFT" spacing="0">
 
-                <Region prefHeight="8"/>
+                        <!-- Targeta jugador -->
+                        <HBox fx:id="jugadorCard" alignment="CENTER_LEFT" spacing="10" styleClass="jugador-card">
+                            <padding>
+                                <Insets bottom="8" left="10" right="14" top="8" />
+                            </padding>
+                            <!-- Icona pingüí (substitueix per ImageView si tens l'asset) -->
+                            <Pane fx:id="jugadorIcon" prefHeight="42" prefWidth="42" styleClass="jugador-icon" />
+                            <VBox alignment="CENTER_LEFT" spacing="2">
+                                <Label fx:id="jugadorNom" styleClass="jugador-nom" text="JUGADOR 1" />
+                                <HBox alignment="CENTER_LEFT" spacing="4">
+                                    <Label styleClass="star-label" text="★" />
+                                    <Label fx:id="jugadorPunts" styleClass="jugador-punts" text="1250" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
 
-                <!-- Formulario -->
-                <VBox spacing="10">
-                    <Label text="Usuario" styleClass="field-label"/>
-                    <TextField fx:id="userField" promptText="Usuario..." styleClass="field"/>
+                        <!-- Espai flexible -->
+                        <Region HBox.hgrow="ALWAYS" />
 
-                    <Label text="Contraseña" styleClass="field-label"/>
-                    <PasswordField fx:id="passField" promptText="Contraseña..." styleClass="field"/>
-                </VBox>
+                        <!-- Botons icones dalt-dreta -->
+                        <HBox alignment="CENTER" spacing="8">
+                            <Button fx:id="btnTrofeu" onAction="#handleTrofeu" styleClass="icon-btn" text="🏆" />
+                            <Button fx:id="btnOpcions" onAction="#handleOpcions" styleClass="icon-btn" text="⚙" />
+                            <Button fx:id="btnAjuda" onAction="#handleAjuda" styleClass="icon-btn" text="?" />
+                        </HBox>
 
-                <Region prefHeight="6"/>
+                    </HBox>
+                </top>
 
-                <!-- Botonera -->
-                <HBox spacing="10">
-                    <Button fx:id="loginButton" text="Login" onAction="#handleLogin" maxWidth="Infinity" styleClass="primary"/>
-                    <Button fx:id="registerButton" text="Registro" onAction="#handleRegister" maxWidth="Infinity"/>
-                </HBox>
+                <!-- CENTER UI: Títol (invisible, pintat al fons) + Botons centrats -->
+                <center>
+                    <HBox alignment="CENTER" prefHeight="369.0" prefWidth="712.0" spacing="40">
 
-                <Label text="Tip: para la demo, puedes entrar con cualquier usuario si aún no hay validación."
-                       styleClass="hint" wrapText="true"/>
-            </VBox>
+                        <!-- Columna botons principals -->
+                        <VBox alignment="CENTER" prefWidth="220" spacing="12">
+
+                            <!-- JUGAR — botó verd gran -->
+                            <Button fx:id="btnJugar" maxWidth="Infinity" onAction="#handleJugar" styleClass="btn-jugar" text="▶  JUGAR" />
+
+                            <!-- PERSONATGES -->
+                            <Button fx:id="btnPersonatges" maxWidth="Infinity" onAction="#handlePersonatges" styleClass="btn-menu" text="PERSONATGES" />
+
+                            <!-- RÀNQUING -->
+                            <Button fx:id="btnRanquing" maxWidth="Infinity" onAction="#handleRanquing" styleClass="btn-menu" text="RÀNQUING" />
+
+                            <!-- BOTIGA -->
+                            <Button fx:id="btnBotiga" maxWidth="Infinity" onAction="#handleBotiga" styleClass="btn-menu" text="BOTIGA" />
+
+                        </VBox>
+
+                        <!-- Cartellet eslògan (dreta dels botons) -->
+                        <VBox fx:id="cartellet" alignment="CENTER" prefWidth="160" styleClass="cartellet">
+                            <padding>
+                                <Insets bottom="18" left="16" right="16" top="18" />
+                            </padding>
+                            <Label styleClass="cartellet-text" text="CORRE, SALTA" wrapText="true" />
+                            <Label styleClass="cartellet-text" text="I ACONSEGUEIX" wrapText="true" />
+                            <Label styleClass="cartellet-text" text="LA MILLOR" wrapText="true" />
+                            <Label styleClass="cartellet-text" text="PUNTUACIÓ!" wrapText="true" />
+                        </VBox>
+
+                    </HBox>
+                </center>
+
+                <!-- BOTTOM UI: Versió + Botó compartir -->
+                <bottom>
+                    <HBox alignment="CENTER_RIGHT" spacing="10">
+                        <Button fx:id="btnCompartir" onAction="#handleCompartir" styleClass="icon-btn" text="↑" />
+                        <Label fx:id="labelVersio" styleClass="versio-label" text="V1.0" />
+                    </HBox>
+                </bottom>
+
+            </BorderPane>
         </StackPane>
     </center>
 
