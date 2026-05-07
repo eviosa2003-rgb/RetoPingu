@@ -1,0 +1,93 @@
+
+	@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800&display=swap');
+	
+	/* VARIABLES DE TEMA */
+	.root {
+	    -fx-font-family: "Nunito";
+	    -fx-background-color: #b3e0f2;  /* cielo ártico */
+	}
+	
+	/* MENÚ */
+	.menu-bar {
+	    -fx-background-color: #1a3a5c;
+	    -fx-border-color: #0d2840;
+	    -fx-border-width: 0 0 3 0;
+	}
+	
+	.menu-bar .label {
+	    -fx-text-fill: #e0f4ff;
+	    -fx-font-weight: bold;
+	}
+	
+	/* TABLERO */
+	.board {
+	    -fx-background-color: rgba(232, 247, 255, 0.8);   /* hielo claro semitransparente */
+	    -fx-background-radius: 20;
+	    -fx-padding: 14;
+	    -fx-border-color: #7ecef0;
+	    -fx-border-width: 3;
+	    -fx-border-radius: 20;
+	    -fx-effect: dropshadow(gaussian, rgba(30,90,140,0.30), 18, 0.2, 0, 4);
+	}
+	
+	/* Estilo para los números de las casillas */
+	.cell-type {
+	    -fx-font-family: "Fredoka One";
+	    -fx-font-size: 11px;
+	    -fx-fill: #1a3a5c;
+	    -fx-opacity: 0.7;
+	}
+	
+	/* TARJETAS DE LA PARTE INFERIOR */
+	.card {
+	    -fx-background-color: #f0faff;
+	    -fx-background-radius: 18;
+	    -fx-padding: 14;
+	    -fx-border-color: #7ecef0;
+	    -fx-border-width: 2.5;
+	    -fx-border-radius: 18;
+	}
+	
+	.card-title {
+	    -fx-font-family: "Fredoka One";
+	    -fx-font-size: 16px;
+	    -fx-text-fill: #1a3a5c;
+	}
+	
+	/* BOTONES */
+	.button {
+	    -fx-background-radius: 12;
+	    -fx-background-color: #d0ecfa;
+	    -fx-text-fill: #1a3a5c;
+	    -fx-font-weight: 800;
+	    -fx-border-color: #7ecef0;
+	    -fx-border-width: 2;
+	    -fx-border-radius: 12;
+	    -fx-cursor: hand;
+	}
+	
+	.button:hover {
+	    -fx-background-color: #b3dff5;
+	    -fx-border-color: #4db8e8;
+	}
+	
+	/* ========================= */
+	/*   FICHAS (IMAGEVIEW)      */
+	/* ========================= */
+	
+	.player {
+	    /* En imágenes usamos dropshadow para que resalten sobre el hielo */
+	    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 4);
+	}
+	
+	/* Brillo para el jugador que tiene el turno actual */
+	.current-player {
+	    -fx-effect: dropshadow(gaussian, #ffff00, 20, 0.5, 0, 0); /* Brillo amarillo */
+	    -fx-scale-x: 1.2;
+	    -fx-scale-y: 1.2;
+	}
+	
+	/* Estilo especial para la Foca si quieres que se vea un poco distinta */
+	#P4 {
+	    -fx-effect: dropshadow(three-pass-box, rgba(13, 40, 64, 0.6), 12, 0, 0, 4);
+	}
