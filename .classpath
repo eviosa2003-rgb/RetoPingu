@@ -6,46 +6,46 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx.base.jar">
+	<classpathentry exported="true" kind="lib" path="D:/RetoPingu/ojdbc11.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx.base.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx.controls.jar">
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx.controls.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx.fxml.jar">
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx.fxml.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx.graphics.jar">
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx.graphics.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx.media.jar">
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx.media.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx.swing.jar">
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx.swing.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx.web.jar">
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx.web.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/julenartesona/Documents/GitHub/Classe-cosas/Rep_pingu/fx/javafx-swt.jar">
+	<classpathentry exported="true" kind="lib" path="C:/Users/aleixmv10/Desktop/github/Reto Pingu/RetoPingu/LibyJFX/javafx-swt.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/RetoPingu/ojdbc11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
