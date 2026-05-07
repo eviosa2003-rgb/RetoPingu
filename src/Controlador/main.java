@@ -23,7 +23,7 @@ public class main extends Application {
 
 			// 2. CARGAR PANTALLA
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/recursos/PantallaMenu.fxml"));
-			Parent root = loader.load();
+			Parent root = loader.load();	
 			Scene scene = new Scene(root);
 
 			primaryStage.setScene(scene);
