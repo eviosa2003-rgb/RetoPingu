@@ -3,12 +3,13 @@ package Modelo;
 import java.io.Serializable;
 
 public abstract class Jugador implements Serializable {
-	private int posicion;
+	private int posicion; 
 	private String nombre;
 	private String color;
-	private Inventario inventario;
-	private int turnoPerdido;
-
+	private Inventario inventario;//inventario del jugador 
+	private int turnoPerdido;//cantidad de turnos perdidios 
+	
+	//constructor
 	public Jugador(String nombre, String color, int posicion) {
 		this.nombre = nombre;
 		this.color = color;
@@ -17,7 +18,7 @@ public abstract class Jugador implements Serializable {
 		this.turnoPerdido = 0;
 	}
 
-	// Getters y Setters básicos
+	// Getters y Setters 
 	public String getNombre() {
 		return nombre;
 	}
@@ -58,12 +59,10 @@ public abstract class Jugador implements Serializable {
 	public void setTurnosPerdidos(int t) {
 		this.turnoPerdido = t;
 	}
-
-	// Conexión con Inventario (Asegúrate de que Inventario tenga estos métodos o
-	// cámbialos aquí)
+	// Conexión con Inventario
 	public int getPeces() {
 		return 0;
-	} // Temporal para que compile
+	} 
 
 	public void setPeces(int n) {
 	}
@@ -89,26 +88,34 @@ public abstract class Jugador implements Serializable {
 	public void setDadoLento(boolean b) {
 	}
 
-	// Lógica de juego
+	
 	public void perderTurno() {
 		this.turnoPerdido++;
 	}
-
+	
+	//indica si el jugador debe saltarse el turno 
 	public boolean saltarTurno() {
 		return turnoPerdido > 0;
 	}
-
+	
 	public void consumirTurnoPerdido() {
 		if (turnoPerdido > 0) {
 			turnoPerdido--;
 		}
 	}
-
+	
+	/*
+	 * mueve al jugador una cantidad de posiciones 
+	 * controla el tablero desde 0 a 49
+	 */
 	public void moverPosicion(int p) {
+		//suma el movimiento a la posicion actual 
 		this.posicion += p;
+		//evita posiciones negativas
 		if (this.posicion < 0) {
 			this.posicion = 0;
 		}
+		//evita superar el final del tablero
 		if (this.posicion > 49) {
 			this.posicion = 49;
 		}

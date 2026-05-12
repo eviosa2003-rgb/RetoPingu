@@ -11,7 +11,7 @@ public class Dado extends Item{
 		this.min = min;
 		this.max = max;
 	}
-	
+	 //getters y setters
 	public int getMax() {
 		return max;
 	}
@@ -26,6 +26,7 @@ public class Dado extends Item{
 		return min;
 	}
 	
+	// Genera un número aleatorio entre min y max
 	public int tirar(Random r) {
 		return r.nextInt(max-min + 1) + min;
 	}

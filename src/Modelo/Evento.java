@@ -1,7 +1,5 @@
 package Modelo;
 
-
-
 public class Evento extends Casilla{ 
 	
 	public Evento(int posicion) {

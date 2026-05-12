@@ -4,25 +4,23 @@ import java.io.Serializable; // Importante para guardar en BD
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Tablero implements Serializable { // Añadido Serializable
+public class Tablero implements Serializable { 
 
-	private ArrayList<Casilla> casillas;
-
+	private ArrayList<Casilla> casillas;//almacena todas las casillas del tablero
+	 //constructor
 	public Tablero() {
 		this.casillas = new ArrayList<Casilla>();
 	}
-
+	
+	//getter y setters
 	public ArrayList<Casilla> getCasillas() {
 		return casillas;
 	}
-
 	public void setCasillas(ArrayList<Casilla> casillas) {
 		this.casillas = casillas;
 	}
-
-	// --- CORRECCIÓN DE ERROR DE COMPILACIÓN ---
-	// Antes tenías "getcasilla" con 'c' minúscula, pero GestorPartida busca
-	// "getCasilla"
+	
+	//devuelve la casilla concreta segun su posicion
 	public Casilla getCasilla(int posicion) {
 		if (posicion >= 0 && posicion < casillas.size()) {
 			return casillas.get(posicion);
@@ -30,11 +28,10 @@ public class Tablero implements Serializable { // Añadido Serializable
 		return null;
 	}
 
-	// --- MÉTODOS PARA EL GESTOR BBDD ---
-	// Estos métodos son los que te daban error en GestorBBDD.java
 	public String serializar() {
 		// Crea una representación en texto del tablero para guardarlo
 		StringBuilder sb = new StringBuilder();
+		//recorre las casillas y guarda el tipo que es
 		for (Casilla c : casillas) {
 			sb.append(c.getClass().getSimpleName()).append(",");
 		}
@@ -42,14 +39,13 @@ public class Tablero implements Serializable { // Añadido Serializable
 	}
 
 	public void deserializar(String datos) {
-		// Aquí reconstruirías el tablero desde el texto de la BD (puedes dejarlo vacío
-		// por ahora para que compile)
+		// Aquí reconstruirías el tablero desde el texto de la BD
 	}
 
-	// --- LÓGICA DE GENERACIÓN ---
+	//genera un tablero aleatorio con distintos tipos de casillas 
 	public void generarCasillasAleatorias() {
 		casillas.clear(); // Limpiamos por si acaso
-		casillas.add(new Normal(0));
+		casillas.add(new Normal(0));//primera casilla normal
 		Random r = new Random();
 
 		for (int i = 1; i < 49; i++) {
@@ -75,20 +71,24 @@ public class Tablero implements Serializable { // Añadido Serializable
 			default:
 				c = new Normal(i);
 			}
+			//añade casilla a tablero
 			casillas.add(c);
 		}
+		//ultima casilla siempre normal 
 		casillas.add(new Normal(49));
 	}
-
+	
+	//busca la siguiente casilla de tipo Trineo apartir de la posicion actual
 	public int buscarSiguienteTrineo(int posicionActual) {
 		for (int i = posicionActual + 1; i < casillas.size(); i++) {
 			if (casillas.get(i) instanceof Trineo) {
-				return i;
+				return i; //devuelve la posicion de trineo encontraso
 			}
 		}
 		return posicionActual; // Si no hay más, se queda donde está
 	}
 
+	// Busca el último agujero antes de la posición actual
 	public int buscarAgujeroAnterior(int posicionActual) {
 		for (int i = posicionActual - 1; i >= 0; i--) {
 			if (casillas.get(i) instanceof Agujero) {
