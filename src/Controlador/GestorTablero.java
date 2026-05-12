@@ -27,18 +27,20 @@ public class GestorTablero {
     		mensaje = "OSO_ATACA";
     		
     	}
+    	
+    		// si la casilla es Oso buscara la casilla anterior
     	else if (casilla instanceof Oso) {
     		int destino = partida.getTablero().buscarAgujeroAnterior(pinguino.getPosicion());
     		pinguino.setPosicion(destino);
     		mensaje = pinguino.getNombre() + "cae en un agujero y retroce a la casilla " + destino +".";
     		
-    	}
+    	} // si la casilla es un agujero, buscara el agujero anterior
     	else if (casilla instanceof Agujero) {
     		int destino = partida.getTablero().buscarAgujeroAnterior(pinguino.getPosicion());
     		pinguino.setPosicion(destino);
     		mensaje = pinguino.getNombre() + "cae en el último trineo y no avanza más.";
     		
-    	}
+    	} 
     	else if (casilla instanceof Trineo) {
     		int destino = partida.getTablero().buscarAgujeroAnterior(pinguino.getPosicion());
     		if (destino != pinguino.getPosicion()) {
@@ -55,26 +57,36 @@ public class GestorTablero {
     		int evento = (int) (Math.random() * 6);
     		
     		switch (evento) {
+    		
+    		// evento conseguir un pez
     		case 0:
     			pinguino.añadirItem(new Pez("pez", 1));
     			mensaje = pinguino.getNombre() + " consigue 1 pez.";
     			break;
+    			
+    		//	evento conseguir bolas de nievee
     		case 1:
     			int bolas = (int) (Math.random());
     			pinguino.añadirItem(new BolaDeNieve("bola", bolas));
     			mensaje = pinguino.getNombre() + "consigue " + bolas + "bolas de nieve.";
     			break;
     			
+    		// Evento conseguir dado rapidooo	
+    			
     		case 2:
     			pinguino.añadirItem(new Dado ("rapido", 1, 5, 10));
     			mensaje = pinguino.getNombre() + " consigue un dado rapido.";
     			break;
+    			
+    		//evento dado Lento	
     			
     		case 3:
     			pinguino.añadirItem(new Dado ("lento", 1, 1, 3));
     			mensaje = pinguino.getNombre() + "consigue un dado lento";
     			break;
     		
+    		// evento perder turno	
+    			
     		case 4:
     			pinguino.perderTurno();
     			mensaje = pinguino.getNombre() + "pierde un turno";

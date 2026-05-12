@@ -14,13 +14,15 @@ import Modelo.Tablero;
 public class GestorJugador {
 	
 	private Random random = new Random();
-
+	
+	// hace qie use un item del inventario
+	
 	public boolean jugadorUsaItem(Pinguino jugador, String nombreItem) {
 		return jugador.getInv().gastarItem(nombreItem, 1);
 	}
 
 	
-	
+	// mueve el jugador por el tablero
 	
 	public void jugadorSeMueve(Jugador j, int pasos, Tablero t) {
 		int nuevaPos = j.getPosicion() +pasos;
@@ -32,7 +34,8 @@ public class GestorJugador {
 			nuevaPos = 0;
 		}
 		j.setPosicion(nuevaPos);
-	
+		
+		//actualiza la casilla del jugador
 	
 	}
 	
@@ -41,6 +44,8 @@ public class GestorJugador {
 			j.consumirTurnoPerdido();
 		}
 	}
+	
+	
 	
 	public void pinguinoEvento(Pinguino p) {
 		
@@ -80,6 +85,7 @@ public class GestorJugador {
 	}
 		
 	
+	// Gestiona una batalla entre dos pinguinos
 	
 	public String pingüinoGuerra(Pinguino p1, Pinguino p2) {
 		

@@ -18,6 +18,8 @@ public class GestorPartida {
 	private Random random;
 	private GestorJugador gestorJugador;
 
+	// 
+	
 	public GestorPartida() {
 		this.partida = null;
 		this.gestorTablero = new GestorTablero();

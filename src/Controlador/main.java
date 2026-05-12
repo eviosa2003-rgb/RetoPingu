@@ -36,7 +36,7 @@ public class main extends Application {
 
 	private void encenderMusica() {
 		try {
-			// Esta forma busca el archivo en la raíz de tu carpeta de proyecto
+			// Esta forma busca el archivo en la raíz en la carpeta del proyecto
 			File file = new File("src/recursos/musica/fondo.mp3");
 			if (!file.exists()) {
 				System.out.println(" El archivo no existe en: " + file.getAbsolutePath());

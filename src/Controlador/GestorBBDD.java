@@ -20,6 +20,8 @@ public class GestorBBDD {
 	private final String USER = "DM1_2526_GRUP03";
 	private final String PASS = "AGRUP03";
 
+	// carga el driver Oracle 
+	
 	public GestorBBDD() {
 		try {
 			// ESTA LÍNEA ES FUNDAMENTAL: Carga el driver en memoria
@@ -29,11 +31,14 @@ public class GestorBBDD {
 			System.out.println("✗ Error: No se encontró el JAR del Driver en el Build Path.");
 		}
 	}
-
+	
+	// metodo devolucion de la conexion de la BD
 	private Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(URL, USER, PASS);
 	}
-
+	
+	// guarda la partida en base de datos
+	
 	public void guardarBBDD(Partida p) {
 		try (Connection conn = getConnection()) {
 			conn.setAutoCommit(false);
@@ -45,8 +50,9 @@ public class GestorBBDD {
 				ps.setString(1, "Partida_" + System.currentTimeMillis());
 				ps.setString(2, p.getTablero().serializar());
 				ps.setInt(3, p.getJugadorActualIndice());
+				System.out.println("INSERT INTO PARTIDA (NOM, TAULELL, TORN_ACTUAL) VALUES ("+"Partida_" + System.currentTimeMillis() + " "+ p.getTablero().serializar() + " "+ p.getJugadorActualIndice()+")");
 				ps.executeUpdate();
-
+				
 				ResultSet rs = ps.getGeneratedKeys();
 				if (rs.next()) {
 					int partidaId = rs.getInt(1);
@@ -70,7 +76,9 @@ public class GestorBBDD {
 			System.out.println("✗ Error ORA al guardar: " + e.getMessage());
 		}
 	}
-
+	
+	// carga la ultima base de datos
+	
 	public Partida cargarBBDD(int idInutil) {
 		Partida partida = new Partida();
 		try (Connection conn = getConnection()) {
